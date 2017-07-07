@@ -40,11 +40,14 @@
 	<!-- ==         COMMON STUFF         == -->
 	<!-- ================================== -->
 
-	<!-- Joystick -->
+	<!-- Robot Joystick -->
 	<include file="$(find bender_joy)/launch/joysticks.launch"/>
 
-	<!-- cmd_vel_mux -->
+	<!-- base cmd_vel_mux -->
 	<include file="$(find uchile_cmd_vel_mux)/launch/mux.launch"/>
+
+	<!-- base safety layer -->
+	<include file="$(find uchile_safety)/launch/safety.launch"/>
 
 	<!-- robot laser self filter -->
 	<include file="$(find uchile_laser_pipeline)/launch/laser_pipeline.launch">
@@ -54,7 +57,6 @@
 
 	<!-- footprint generator -->
 	<!-- <include file="$(find uchile_footprint_generator)/launch/footprint_generator.launch"/> -->
-
 
 	
 	<!-- =================================================== -->
