@@ -47,7 +47,7 @@
 	<include file="$(find uchile_cmd_vel_mux)/launch/mux.launch"/>
 
 	<!-- base safety layer -->
-	<!-- <include file="$(find uchile_safety)/launch/safety.launch"/> -->
+	<include file="$(find uchile_safety)/launch/safety.launch"/>
 
 	<!-- laser filtering: self filter and range filtering -->
 	<include file="$(find uchile_laser_pipeline)/launch/pipeline.launch"/>
