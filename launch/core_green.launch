@@ -6,7 +6,7 @@
 	
 	<!-- robot configuration -->
 	<arg name="model_type"     default="standard"/>
-	<arg name="language"       default="spanish"/> <!-- { english , spanish } -->
+	<arg name="language"       default="english"/> <!-- { english , spanish } -->
 
 	<!-- GUI -->
 	<arg name="rviz"           default="true"/>
@@ -20,6 +20,8 @@
 	<!-- simulator specific parameters -->
 	<arg name="gazebo_gui" default="true"/>
 
+	<!-- safety layer -->
+	<arg name="safety"     default="true"/>
 
 	<!-- ================================================== -->
 	<!-- ==================== HARDWARE ==================== -->
@@ -47,7 +49,7 @@
 	<include file="$(find uchile_cmd_vel_mux)/launch/mux.launch"/>
 
 	<!-- base safety layer -->
-	<include file="$(find uchile_safety)/launch/safety.launch"/>
+	<include if="$(arg safety)" file="$(find uchile_safety)/launch/safety.launch"/>
 
 	<!-- laser filtering: self filter and range filtering -->
 	<include file="$(find uchile_laser_pipeline)/launch/pipeline.launch"/>
