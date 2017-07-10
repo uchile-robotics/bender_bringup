@@ -6,7 +6,7 @@
 	
 	<!-- robot configuration -->
 	<arg name="model_type"     default="standard"/>
-	<arg name="language"       default="spanish"/>
+	<arg name="language"       default="english"/>
 
 	<!-- GUI -->
 	<arg name="rviz"           default="false"/>
