@@ -1,0 +1,24 @@
+<launch>
+	<!-- 
+		Tool Description
+		================
+		This launch allows the creation of 2D environment maps, as the
+		ones used by localization and navigation modules.
+
+		Tool Usage
+		================
+		The recommended procedure is to launch manually the robot essentials
+		(base, lasers, mux and joystick) using something like:
+			roslaunch bender_bringup core_green.launch
+
+		You must also launch rviz to see how the map is built. Then, launch
+		this file to start the mapping process.
+
+		When you are satisfied with the map, run:
+			rosrun map_server map_saver
+	 -->
+	<!-- Mapping Node -->
+	<include file="$(find uchile_bringup)/launch/localization/gmapping.launch.xml">
+		<arg name="slam" value="true"/>
+	</include> 
+</launch>

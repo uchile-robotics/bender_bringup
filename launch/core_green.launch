@@ -57,6 +57,8 @@
 	<!-- footprint generator -->
 	<!-- <include file="$(find uchile_footprint_generator)/launch/footprint_generator.launch"/> -->
 
+	<!-- Localization -->
+	<include file="$(find bender_bringup)/launch/localization/localization.launch"/>
 	
 	<!-- =================================================== -->
 	<!-- ==================== KNOWLEDGE ==================== -->
