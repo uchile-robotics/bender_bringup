@@ -27,11 +27,15 @@ global_frame: /map
 
 # The frequency in Hz for the map to be updated. 
 # update_frequency (double, default: 5.0)
-update_frequency: 2.0  # global map is static => does not require a high update_frequency
+# HIGH impact on CPU consumption
+# global map is static => does not require a high update_frequency
+# also, by setting this to a low value, most dynamic 
+# obstacles will not be considered!
+update_frequency: 0.5  # every 2[s] 
 
 # The frequency in Hz for the map to be publish display information. 
 # publish_frequency (double, default: 0.0)
-publish_frequency: 0.0  # Just for visualization. Uses CPU and network bandwidth.
+publish_frequency: 0.5  # Just for visualization. Uses CPU and network bandwidth.
 
 
 # Map management parameters

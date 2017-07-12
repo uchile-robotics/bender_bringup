@@ -4,6 +4,8 @@
 
 map_type: costmap # (ahora "voxel" es el default.. de hecho, "costmap" ya no esta documentado)
 # robot_radius: 0.32
+
+# AJUSTAR FOOTPRINT.. al parecer queda largo para atras
 footprint: [[-0.35,-0.35],[-0.35,0.35],[0.2,0.35],[0.26,0],[0.2,-0.35]]
 footprint_padding: 0.01
 # footprint_topic: /bender/nav/footprint

@@ -8,8 +8,8 @@ static_map: false
 # Each specification is a dictionary with name and type fields.
 # The name is used to define the parameter namespace for the plugin.
 plugins:
-
-
+- {name: static_layer, type: 'costmap_2d::StaticLayer'}
+- {name: static_obstacles_layer, type: 'costmap_2d::StaticLayer'}
 - {name: obstacle_layer, type: 'costmap_2d::ObstacleLayer'}
 - {name: inflation_layer, type: 'costmap_2d::InflationLayer'}
 
@@ -31,7 +31,7 @@ update_frequency: 5.0
 
 # The frequency in Hz for the map to be publish display information. 
 # publish_frequency (double, default: 0.0)
-publish_frequency: 0.0
+publish_frequency: 0.5
 
 
 # Map management parameters
@@ -62,3 +62,26 @@ height: 5
 resolution: 0.025
 origin_x: 0.0
 origin_y: 0.0
+
+
+
+
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+# Static Obstacles Layer
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+static_layer:
+  map_topic: "/map"
+  first_map_only: true
+  subscribe_to_updates: false
+  track_unknown_space: true
+  use_maximum: false
+  trinary_costmap: true
+static_obstacles_layer:
+  map_topic: "/bender/knowledge/map/map_obstacles"
+  first_map_only: true
+  subscribe_to_updates: false
+  track_unknown_space: true
+  use_maximum: true
+  trinary_costmap: true
+
+
