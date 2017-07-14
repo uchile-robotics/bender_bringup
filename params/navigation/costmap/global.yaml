@@ -35,7 +35,7 @@ update_frequency: 0.5  # every 2[s]
 
 # The frequency in Hz for the map to be publish display information. 
 # publish_frequency (double, default: 0.0)
-publish_frequency: 0.5  # Just for visualization. Uses CPU and network bandwidth.
+publish_frequency: 0.0  # Just for visualization. Uses CPU and network bandwidth.
 
 
 # Map management parameters

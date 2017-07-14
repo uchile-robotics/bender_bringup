@@ -6,7 +6,7 @@ map_type: costmap # (ahora "voxel" es el default.. de hecho, "costmap" ya no est
 # robot_radius: 0.32
 
 # AJUSTAR FOOTPRINT.. al parecer queda largo para atras
-footprint: [[-0.35,-0.35],[-0.35,0.35],[0.2,0.35],[0.26,0],[0.2,-0.35]]
+footprint: [[-0.30,-0.33],[-0.30,0.33],[0.2,0.33],[0.27,0],[0.2,-0.33]]
 footprint_padding: 0.01
 # footprint_topic: /bender/nav/footprint
 
@@ -110,7 +110,7 @@ obstacle_layer:
     sensor_frame: /bender/sensors/laser_front_link,
     data_type: LaserScan,
     topic: /bender/sensors/laser_front/scan_filtered,
-    expected_update_rate: 0.1, # works at 20 Hz
+    expected_update_rate: 0.15, # works at 20 Hz
     observation_persistence: 0.0,
     marking: true,
     clearing: true,

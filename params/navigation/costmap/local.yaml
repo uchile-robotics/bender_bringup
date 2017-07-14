@@ -27,11 +27,11 @@ global_frame: /bender/odom
 
 # The frequency in Hz for the map to be updated. 
 # update_frequency (double, default: 5.0)
-update_frequency: 5.0
+update_frequency: 10.0
 
 # The frequency in Hz for the map to be publish display information. 
 # publish_frequency (double, default: 0.0)
-publish_frequency: 0.5
+publish_frequency: 2.0
 
 
 # Map management parameters
@@ -57,9 +57,9 @@ always_send_full_costmap: false
 # - The x origin of the map in the global frame in meters. (double, default: 0.0)
 # - The y origin of the map in the global frame in meters. (double, default: 0.0)
 # 
-width: 5
-height: 5
-resolution: 0.025
+width: 3
+height: 3
+resolution: 0.02
 origin_x: 0.0
 origin_y: 0.0
 
