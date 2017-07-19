@@ -9,9 +9,9 @@
 	<arg name="language"       default="english"/>
 
 	<!-- GUI -->
-	<arg name="rviz"           default="false"/>
+	<arg name="rviz"           default="true"/>
 	<arg name="rqt_gui"        default="false"/>
-	<arg name="show_subtitles" default="false"/> <!-- { english , spanish } -->
+	<arg name="show_subtitles" default="true"/> <!-- { english , spanish } -->
 
 	<!-- robot simulation -->
 	<arg name="robot"      default="real"/> <!-- { real, gazebo, stage } -->
