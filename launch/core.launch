@@ -37,9 +37,9 @@
 	</include>
 
 	<!-- ================================================== -->
-	<!-- ==================== BLUE LAPTOP ================= -->
+	<!-- ==================== RED LAPTOP ================= -->
 	<!-- ================================================== -->
-	<include file="$(find bender_bringup)/launch/core_blue.launch">
+	<include file="$(find bender_bringup)/launch/core_red.launch">
 		<arg name="model_type"     value="$(arg model_type)"/>
 		<arg name="language"       value="$(arg language)"/>
 		<arg name="rviz"           value="$(arg rviz)"/>

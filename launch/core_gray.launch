@@ -21,29 +21,22 @@
 	<arg name="gazebo_gui" default="true"/>
 
 
-	<!-- ================================================== -->
-	<!-- ==================== HARDWARE ==================== -->
-	<!-- ================================================== -->
-
-	<!-- Sound Player -->
-	<include file="$(find bender_sound)/launch/sound.launch"/>
-
-	<!-- TTS -->
-	<include file="$(find bender_tts)/launch/tts.launch">
-    	<arg name="language"       value="$(arg language)"/>
-    	<arg name="show_subtitles" value="$(arg show_subtitles)"/>
-	</include>
 	
 
 	<!-- =================================================== -->
 	<!-- =================  VISUALIZATION  ================= -->
 	<!-- =================================================== -->
 
+    <!-- subtitles -->
+    <include file="$(find uchile_gui_subtitles)/launch/subtitles.launch" if="$(arg show_subtitles)"
+        ns="/bender/hw/tts">
+        <arg name="text_source" default="/bender/hw/tts/text"/>
+    </include>
+    
 	<!-- RVIZ -->
 	<include file="$(find uchile_util)/launch/rviz.launch" if="$(arg rviz)"/>
 	<!-- Batt -->
 	<include file="$(find uchile_rqt_batteries)/launch/bender_batteries.launch"/>
-	<include file="$(find uchile_report_generator)/launch/report_generator.launch"/>
-	<include file="$(find uchile_rosbag_record)/launch/rosbag_record.launch"/>
+
 
 </launch>

@@ -6,12 +6,12 @@
 	
 	<!-- robot configuration -->
 	<arg name="model_type"     default="standard"/>
-	<arg name="language"       default="english"/> <!-- { english , spanish } -->
+	<arg name="language"       default="spanish"/>
 
 	<!-- GUI -->
 	<arg name="rviz"           default="true"/>
 	<arg name="rqt_gui"        default="false"/>
-	<arg name="show_subtitles" default="true"/>
+	<arg name="show_subtitles" default="false"/> <!-- { english , spanish } -->
 
 	<!-- robot simulation -->
 	<arg name="robot"      default="real"/> <!-- { real, gazebo, stage } -->
@@ -20,54 +20,42 @@
 	<!-- simulator specific parameters -->
 	<arg name="gazebo_gui" default="true"/>
 
-	<!-- safety layer -->
-	<arg name="safety"     default="true"/>
+
 
 	<!-- ================================================== -->
 	<!-- ==================== HARDWARE ==================== -->
 	<!-- ================================================== -->
-	
-	<!-- ================================= -->
-	<!-- == REAL HARDWARE VS. SIMULATOR == -->
-	<!-- ================================= -->
-	<include file="$(find bender_bringup)/launch/robot/$(arg robot).xml">
-		<arg name="gui"          value="$(arg gazebo_gui)"/>
-		<arg name="rqt_gui"      value="$(arg rqt_gui)"/>
-		<arg name="worldname"    value="$(arg worldname)"/>
-		<arg name="model_type"   value="$(arg model_type)"/>
+
+	<!-- Sound Player -->
+	<include file="$(find bender_sound)/launch/sound.launch"/>
+
+	<!-- TTS -->
+	<include file="$(find bender_tts)/launch/tts.launch">
+    	<arg name="language"       value="$(arg language)"/>
+    	<arg name="show_subtitles" value="$(arg show_subtitles)"/>
 	</include>
 
-
-	<!-- ================================== -->
-	<!-- ==         COMMON STUFF         == -->
-	<!-- ================================== -->
-
-	<!-- Robot Joystick -->
-	<include file="$(find bender_joy)/launch/joysticks.launch"/>
-
-	<!-- base cmd_vel_mux -->
-	<include file="$(find uchile_cmd_vel_mux)/launch/mux.launch"/>
-
-	<!-- base safety layer -->
-	<include if="$(arg safety)" file="$(find uchile_safety)/launch/safety.launch"/>
-
-	<!-- laser filtering: self filter and range filtering -->
-	<include file="$(find uchile_laser_pipeline)/launch/pipeline.launch"/>
-
-	<!-- footprint generator -->
-	<!-- <include file="$(find uchile_footprint_generator)/launch/footprint_generator.launch"/> -->
-
-	<!-- Localization -->
-	<include file="$(find bender_bringup)/launch/localization/localization.launch"/>
+	<!-- ARMS -->
+	<arg name="simulation"   default="false"/>
+	<group unless="$(arg simulation)">
+		<!-- ARMs and HEAD controllers -->
+		<include file="$(find bender_arm)/launch/arms.launch" />
+	</group>	
 	
-	<!-- =================================================== -->
-	<!-- ==================== KNOWLEDGE ==================== -->
-	<!-- =================================================== -->
+	<!-- MANIPULATION -->
+	<include file="$(find bender_arm_control)/launch/planning.launch" />
+	<include file="$(find uchile_states)/launch/manipulation.launch" />
 
-	<!-- Pose Server -->
-	<include file="$(find uchile_pose_server)/launch/pose_server.launch"/>
 
-	<!-- Mapper -->
-	<include file="$(find uchile_util)/launch/mapper.launch"/>
+	<!-- Report Generator -->
+	<include file="$(find uchile_report_generator)/launch/report_generator.launch"/>
+	<include file="$(find uchile_rosbag_record)/launch/rosbag_record.launch"/>
+
+	<!-- uchile_rqt_batteries -->
+	
+	<include file="$(find uchile_rqt_batteries)/launch/notebook_battery.launch">
+		<arg name="name" value="green"/>
+	</include>
+
 
 </launch>
