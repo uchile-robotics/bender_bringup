@@ -1,3 +1,4 @@
+
 <launch>
 
 	<!-- ================================================== -->
@@ -21,7 +22,7 @@
 	<arg name="gazebo_gui" default="true"/>
 
 	<!-- safety layer -->
-	<arg name="safety"     default="true"/>
+	<arg name="safety"     default="false"/>
 
 	<!-- ================================================== -->
 	<!-- ==================== HARDWARE ==================== -->
