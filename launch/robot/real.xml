@@ -15,10 +15,12 @@
 		<arg name="model_type" value="$(arg model_type)"/>
 	</include>
 
-	<!-- Laser/Lasers -->
+	<!-- Laser/Lasers-->
 	<include file="$(find bender_sensors)/launch/hokuyo/hokuyo_front.launch"/>
+	
+	<!--
 	<include file="$(find bender_sensors)/launch/hokuyo/hokuyo_rear.launch"/>
-
+	-->
 	<!-- Rosaria -->
 	<include file="$(find bender_base)/launch/base.launch"/>
 
