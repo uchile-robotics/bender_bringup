@@ -64,8 +64,6 @@ origin_x: 0.0
 origin_y: 0.0
 
 
-
-
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # Static Obstacles Layer
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
@@ -76,8 +74,9 @@ static_layer:
   track_unknown_space: true
   use_maximum: false
   trinary_costmap: true
+
 static_obstacles_layer:
-  map_topic: "/bender/knowledge/map/map_obstacles"
+  map_topic: "/bender/knowledge/map/map_full"
   first_map_only: true
   subscribe_to_updates: false
   track_unknown_space: true

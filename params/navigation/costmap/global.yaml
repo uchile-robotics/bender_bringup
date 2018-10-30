@@ -122,7 +122,7 @@ static_layer:
 # Static Obstacles Layer
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 static_obstacles_layer:
-  map_topic: "/bender/knowledge/map/map_obstacles"
+  map_topic: "/bender/knowledge/map/map_full"
   first_map_only: true
   subscribe_to_updates: false
   track_unknown_space: true
