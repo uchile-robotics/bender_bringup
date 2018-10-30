@@ -18,7 +18,7 @@
 			rosrun map_server map_saver
 	 -->
 	<!-- Mapping Node -->
-	<include file="$(find uchile_bringup)/launch/localization/gmapping.launch.xml">
-		<arg name="slam" value="true"/>
+	<include file="$(find bender_bringup)/launch/localization/gmapping.launch.xml">
+		<!-- <arg name="slam" value="true"/> -->
 	</include> 
 </launch>
