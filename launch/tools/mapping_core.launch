@@ -1,0 +1,40 @@
+<launch>
+	
+	<!-- ================================================== -->
+	<!-- ==================== PARAMETERS ================== -->
+	<!-- ================================================== -->
+	
+	<!-- robot configuration -->
+	<arg name="model_type"     default="standard"/>
+
+	<!-- robot simulation -->
+	<arg name="robot"      default="real"/> <!-- { real, gazebo, stage } -->
+	<arg name="worldname"  default="amtc"/>
+
+
+	<!-- ================================================== -->
+	<!-- ==================== HARDWARE ==================== -->
+	<!-- ================================================== -->
+	
+	<!-- ================================= -->
+	<!-- == REAL HARDWARE VS. SIMULATOR == -->
+	<!-- ================================= -->
+	<include file="$(find bender_bringup)/launch/robot/$(arg robot).xml">
+		<arg name="worldname"    value="$(arg worldname)"/>
+		<arg name="model_type"   value="$(arg model_type)"/>
+	</include>
+
+	<!-- ================================== -->
+	<!-- ==         COMMON STUFF         == -->
+	<!-- ================================== -->
+
+	<!-- Robot Joystick -->
+	<include file="$(find bender_joy)/launch/joysticks.launch"/>
+
+	<!-- base cmd_vel_mux -->
+	<include file="$(find uchile_cmd_vel_mux)/launch/mux.launch"/>
+
+	<!-- laser filtering: self filter and range filtering -->
+	<include file="$(find uchile_laser_pipeline)/launch/pipeline.launch"/>
+
+</launch>

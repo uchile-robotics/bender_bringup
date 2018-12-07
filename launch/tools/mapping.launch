@@ -7,9 +7,9 @@
 
 		Tool Usage
 		================
-		The recommended procedure is to launch manually the robot essentials
-		(base, lasers, mux and joystick) using something like:
-			roslaunch bender_bringup core_green.launch
+		First launch the mapping_core.launch file. This will launch 
+		the following: (base, lasers, mux and joystick)
+			roslaunch bender_bringup mapping_core.launch
 
 		You must also launch rviz to see how the map is built. Then, launch
 		this file to start the mapping process.
@@ -18,7 +18,7 @@
 			rosrun map_server map_saver
 	 -->
 	<!-- Mapping Node -->
-	<include file="$(find uchile_bringup)/launch/localization/gmapping.launch.xml">
-		<arg name="slam" value="true"/>
+	<include file="$(find bender_bringup)/launch/localization/localization.launch">
+		<arg name="type" value="gmapping"/>
 	</include> 
 </launch>
