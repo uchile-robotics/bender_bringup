@@ -69,7 +69,7 @@
 
 	<include file="$(find bender_sensors)/launch/rgbd/rgbd_head.launch" />
 
-	<include file="$(find uchile_pcl_to_scan)/launch/depth_to_laserscan.launch"/>
+	<!-- <include file="$(find uchile_pcl_to_scan)/launch/depth_to_laserscan.launch"/> -->
 
 	<!-- Mapper -->
 	<include file="$(find uchile_util)/launch/mapper.launch"/>

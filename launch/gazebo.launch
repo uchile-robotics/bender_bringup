@@ -4,6 +4,8 @@
 	<!-- ==================== PARAMETERS ================== -->
 	<!-- ================================================== -->
 	
+	<remap from="bender/sensors/laser_front/scan" to="scan"/>
+	<remap from="bender/nav/base/cmd_vel" to="cmd_vel"/>
 	<!-- robot configuration -->
 	<arg name="model_type"     default="standard"/>
 	<arg name="language"       default="spanish"/> <!-- { english , spanish } -->
@@ -14,7 +16,7 @@
 	<arg name="show_subtitles" default="false"/>
 
 	<!-- robot simulation -->
-	<arg name="worldname"  default="empty"/>
+	<arg name="worldname"  default="amtc"/>
 
 	<!-- simulator specific parameters -->
 	<arg name="gazebo_gui" default="true"/>
@@ -38,26 +40,26 @@
 	<!-- ================================== -->
 	<!-- ==         COMMON STUFF         == -->
 	<!-- ================================== -->
-	<!-- cmd_vel_mux
+	<!-- cmd_vel_mux -->
 	<include file="$(find uchile_cmd_vel_mux)/launch/mux.launch"/>
-	-->
-	<!-- robot laser self filter 
-	<include file="$(find uchile_laser_pipeline)/launch/laser_pipeline.launch">
+	
+	<!-- robot laser self filter  -->
+	<!-- <include file="$(find uchile_laser_pipeline)/launch/laser_pipeline.launch">
 		<arg name="input_scan"  value="/bender/sensors/laser_front/scan"/>
 		<arg name="output_scan" value="/bender/sensors/laser_front/scan_filtered"/>
-	</include>
-	-->
-	<!-- footprint generator 
+	</include> -->
+	
+	<!-- footprint generator  -->
 	<include file="$(find uchile_footprint_generator)/launch/footprint_generator.launch"/>
-	-->
+	
 	<!-- Sound Player -->
-	<include file="$(find bender_sound)/launch/sound.launch"/>
+	<!-- <include file="$(find bender_sound)/launch/sound.launch"/> -->
 
 	<!-- TTS -->
-	<include file="$(find bender_tts)/launch/tts.launch">
+	<!-- <include file="$(find bender_tts)/launch/tts.launch">
     	<arg name="language"       value="$(arg language)"/>
     	<arg name="show_subtitles" value="$(arg show_subtitles)"/>
-	</include>
+	</include> -->
 	
 	<!-- =================================================== -->
 	<!-- ==================== KNOWLEDGE ==================== -->

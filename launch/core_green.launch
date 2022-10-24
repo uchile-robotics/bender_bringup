@@ -30,21 +30,21 @@
 	<include file="$(find bender_sound)/launch/sound.launch"/>
 
 	<!-- TTS -->
-	<include file="$(find bender_tts)/launch/tts.launch">
+	<!-- <include file="$(find bender_tts)/launch/tts.launch">
     	<arg name="language"       value="$(arg language)"/>
     	<arg name="show_subtitles" value="$(arg show_subtitles)"/>
-	</include>
+	</include> -->
 
 	<!-- ARMS -->
 	<arg name="simulation"   default="false"/>
 	<group unless="$(arg simulation)">
 		<!-- ARMs and HEAD controllers -->
 		<include file="$(find bender_arm)/launch/arms.launch" />
-	</group>	
+	</group>
 	
 	<!-- MANIPULATION -->
-	<include file="$(find bender_arm_control)/launch/planning.launch" />
-	<include file="$(find uchile_states)/launch/manipulation.launch" />
+	<!-- <include file="$(find bender_arm_control)/launch/planning.launch" />
+	<include file="$(find uchile_states)/launch/manipulation.launch" /> -->
 
 
 	<!-- Report Generator -->

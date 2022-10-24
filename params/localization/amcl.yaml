@@ -1,12 +1,12 @@
 
 # Initial pose (x, y, yaw, cov_x, cov_y, cov_yaw), used to initialize
 # filter with Gaussian distribution.
-#initial_pose_x: 0.0
-#initial_pose_y: 0.0
-#initial_pose_a: 0.0
-#initial_cov_xx: 5*5
-#initial_cov_yy: 5*5
-#initial_cov_aa: pi*pi/12*12
+initial_pose_x: 0.0
+initial_pose_y: 0.0
+initial_pose_a: 0.0
+initial_cov_xx: 5*5
+initial_cov_yy: 5*5
+initial_cov_aa: pi*pi/12*12
 
 
 # Overall filter parameters
@@ -54,7 +54,7 @@ recovery_alpha_slow: 0.0
 recovery_alpha_fast: 0.0
 
 # Maximum rate (Hz) at which scans and paths are published for visualization, -1.0 to disable. 
-gui_publish_rate: 10
+gui_publish_rate: 20 #10
 
 # Maximum rate (Hz) at which to store the last estimated pose and covariance to the parameter
 # server, in the variables: ~initial_pose_*  and  ~initial_cov_*. This saved pose will be used
@@ -93,7 +93,7 @@ laser_max_beams: 30
 
 # Mixture weight for the z_hit part of the model. 
 # (default: 0.95)
-laser_z_hit: 0.5
+laser_z_hit: 0.95 #0.5
 
 # Mixture weight for the z_short part of the model. 
 # (default: 0.10)
@@ -163,12 +163,12 @@ odom_alpha5: 1.0
 
 # Which frame to use for odometry. 
 # (default: "odom")
-odom_frame_id: /bender/odom
+odom_frame_id: bender/odom
 
 # Which frame to use for the robot base 
 # (default: "base_link")
-base_frame_id: /bender/base_link
+base_frame_id: bender/base_link
 
 # The name of the coordinate frame published by the localization system 
 # (default: "map")
-global_frame_id: /map
+global_frame_id: map

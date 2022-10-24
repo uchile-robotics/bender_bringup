@@ -8,7 +8,7 @@
 	<arg name="model_type"     default="standard"/>
 
 	<!-- robot simulation -->
-	<arg name="robot"      default="real"/> <!-- { real, gazebo, stage } -->
+	<arg name="robot"      default="gazebo"/> <!-- { real, gazebo, stage } -->
 	<arg name="worldname"  default="amtc"/>
 
 

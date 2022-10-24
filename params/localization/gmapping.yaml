@@ -7,9 +7,9 @@
 
 # wrapper parameters
 throttle_scans: 1
-base_frame: /bender/base_link
-map_frame: /map
-odom_frame: /bender/odom
+base_frame: bender/base_link
+map_frame: map
+odom_frame: bender/nav/odom
 map_update_interval: 3
 
 # initial map dimensions and resolution

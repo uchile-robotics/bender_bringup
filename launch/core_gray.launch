@@ -28,10 +28,10 @@
 	<!-- =================================================== -->
 
     <!-- subtitles -->
-    <include file="$(find uchile_gui_subtitles)/launch/subtitles.launch" if="$(arg show_subtitles)"
+    <!-- <include file="$(find uchile_gui_subtitles)/launch/subtitles.launch" if="$(arg show_subtitles)"
         ns="/bender/hw/tts">
         <arg name="text_source" default="/bender/hw/tts/text"/>
-    </include>
+    </include> -->
     
 	<!-- RVIZ -->
 	<include file="$(find uchile_util)/launch/rviz.launch" if="$(arg rviz)"/>

@@ -60,7 +60,8 @@ TrajectoryPlannerROS:
  dwa: false  # whether to use DWA(recommended) or Trajectory Rollout
 
  publish_cost_grid_pc: true # publish cost grids (goal, path, occ, total)
- global_frame_id: bender/odom
+ global_frame_id: bender/nav/odom
+ robot_base_frame: bender/base_footprint
 
  # Oscillation Prevention Parameters
  # - - - - - - - - - - - - - - - -
@@ -69,3 +70,5 @@ TrajectoryPlannerROS:
  # Global Plan Parameters
  # - - - - - - - - - - - - - - - -
  prune_plan: true # eat up the plan as the robot moves along the path
+
+
