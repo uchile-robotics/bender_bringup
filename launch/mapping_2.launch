@@ -1,0 +1,31 @@
+  <launch>
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+    <remap from="/scan" to="/scan"/>
+      <rosparam>
+        maxUrange: 28
+        base_frame: bender/base_link
+        odom_frame: bender/odom
+
+        map_update_interval: 3
+        minimumScore: 650     <!-- poner mas de 600 que tan bueno es el escaneo laser-->
+        linearUpdate: 0.5
+        angularUpdate: 0.218
+        temporalUpdate: 2.5
+        xmin: -20
+        ymin: -20
+        xmax: 20
+        ymax: 20
+        maxRange: 30
+        particles: 200
+        iterations: 10
+        srr: 0.01
+        srt: 0.02
+        str: 0.01
+        stt: 0.02
+        delta: 0.02
+
+        transform_publish_period: 0.05
+
+      </rosparam>
+    </node>
+  </launch>
