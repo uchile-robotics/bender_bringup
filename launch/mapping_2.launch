@@ -1,12 +1,12 @@
   <launch>
     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
-    <remap from="/scan" to="/scan"/>
+    <remap from="/scan" to="/bender/sensors/laser_front/scan"/>
       <rosparam>
         maxUrange: 28
         base_frame: bender/base_link
         odom_frame: bender/odom
 
-        map_update_interval: 3
+        map_update_interval: 0.15
         minimumScore: 650     <!-- poner mas de 600 que tan bueno es el escaneo laser-->
         linearUpdate: 0.5
         angularUpdate: 0.218

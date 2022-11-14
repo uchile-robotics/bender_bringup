@@ -2,7 +2,6 @@
   <!-- Arguments -->
 
   <arg name="move_forward_only" default="true"/>
-  <!--arg name="map_name"  default="mapa_robocup_19"/-->
   <arg name="map_name"  default="amtc"/>
 
 
@@ -19,9 +18,9 @@
   <!-- move_base -->
 
   <include file="$(find bender_bringup)/launch/navigation/move_base.launch">
-        <!--remap from="cmd_vel" to="pico"/-->
-        <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+      <arg name="move_forward_only" value="$(arg move_forward_only)"/>
   </include>
 
+  <!-- <include file="$(find bender_bringup)/launch/navigation/goal_server.launch" /> -->
 
 </launch>

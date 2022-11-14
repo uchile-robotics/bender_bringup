@@ -4,7 +4,6 @@
 	<!-- ==================== PARAMETERS ================== -->
 	<!-- ================================================== -->
 	
-	<remap from="bender/sensors/laser_front/scan" to="scan"/>
 	<remap from="bender/nav/base/cmd_vel" to="cmd_vel"/>
 	<!-- robot configuration -->
 	<arg name="model_type"     default="standard"/>
