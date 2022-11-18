@@ -3,8 +3,8 @@
 	<!-- ================================================== -->
 	<!-- ==================== PARAMETERS ================== -->
 	<!-- ================================================== -->
-	
-	<remap from="bender/nav/base/cmd_vel" to="cmd_vel"/>
+	<remap from="/scan" to="/bender/sensors/laser_front/scan"/>
+
 	<!-- robot configuration -->
 	<arg name="model_type"     default="standard"/>
 	<arg name="language"       default="spanish"/> <!-- { english , spanish } -->
