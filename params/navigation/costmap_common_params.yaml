@@ -6,9 +6,9 @@ footprint: [[-0.30,-0.33],[-0.30,0.33],[0.2,0.33],[0.27,0],[0.2,-0.33]]
 footprint_padding: 0.01
 robot_radius: 0.32
 
-inflation_radius: 0.35  # chantar 04 
-cost_scaling_factor: 3.0
+inflation_radius: 0.25  # chantar 04 
+cost_scaling_factor: 10.0 #3.0
 
 map_type: costmap
 observation_sources: scan
-scan: {sensor_frame: bender/base_link, data_type: LaserScan, topic: /bender/sensors/laser_front/scan, marking: true, clearing: true}
+scan: {sensor_frame: bender/base_link, data_type: LaserScan, topic: /bender/sensors/scan_multi, marking: true, clearing: true}
