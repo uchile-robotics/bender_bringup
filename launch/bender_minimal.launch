@@ -11,18 +11,13 @@
 	<!-- - - - - - - ROBOT - - - - - -  -->
 
 	<!-- transforms -->
-	<include file="$(find uchile_tf)/launch/tf.launch">
-		<arg name="use_gui"    value="false"/>
-		<arg name="model_type" value="$(arg model_type)"/>
-	</include>
-
-	<!-- Laser/Lasers -->
-	<include file="$(find bender_sensors)/launch/hokuyo/hokuyo_front.launch"/>
+	<include file="$(find uchile_tf)/launch/tf.launch" />
 
 	<!-- Rosaria -->
 	<include file="$(find bender_base)/launch/base.launch"/>
 
-    <!-- Localization -->>
-    <!-- <include file="$(find bender_bringup)/launch/lcoalization/localization.launch" /> -->
+	<!-- Laser/Lasers -->
+	<include file="$(find bender_sensors)/launch/hokuyo/hokuyo_front.launch" />
+	<include file="$(find bender_sensors)/launch/rgbd/asus/asus_head.launch" />
 
 </launch>
