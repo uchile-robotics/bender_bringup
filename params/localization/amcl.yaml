@@ -19,7 +19,7 @@ max_particles: 5000
 
 # max error between the true distribution and the estimated distribution. 
 # (default: 0.01)
-kld_err: 0.03
+kld_err: 0.01 #0.03
 
 # Upper standard normal quantile for (1-p), where p is the probability that the error on the 
 # estimated distrubition will be less than kld_err. 

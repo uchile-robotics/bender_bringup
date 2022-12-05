@@ -1,8 +1,42 @@
-shutdown_costmaps: false
-controller_frequency: 10.0
-planner_patience: 5.0
-controller_patience: 15.0
-conservative_reset_dist: 3.0
-planner_frequency: 5.0
-oscillation_timeout: 10.0
-oscillation_distance: 0.2
+
+
+/bender/nav/move_base:
+
+ recovery_behaviors: [
+     {name: aggressive_reset,   type: clear_costmap_recovery/ClearCostmapRecovery},
+     {name: conservative_reset, type: clear_costmap_recovery/ClearCostmapRecovery},
+     {name: twist_left_down,    type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_right_down,   type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_down_1,       type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_right_1,      type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_down_2,       type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_right_2,      type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_down_3,       type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_right_up,     type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_up_1,         type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_left_up,      type: uchile_twist_recovery/TwistRecovery},
+     {name: twist_up_2,         type: uchile_twist_recovery/TwistRecovery},
+     {name: rotate_recovery,    type: rotate_recovery/RotateRecovery}
+ ]
+ 
+ twist_up_1:   {linear_x:  0.15, angular_z:  0.00, duration: 3}
+ twist_up_2:   {linear_x:  0.15, angular_z:  0.00, duration: 3}
+ twist_down_1:   {linear_x: -0.15, angular_z:  0.00, duration: 4}
+ twist_down_2:   {linear_x: -0.15, angular_z:  0.00, duration: 4}
+ twist_down_3:   {linear_x: -0.15, angular_z:  0.00, duration: 3}
+ twist_right_1: {linear_x:  0.00, angular_z: -0.20, duration: 3}
+ twist_right_2: {linear_x:  0.00, angular_z: -0.20, duration: 3}
+ twist_left_down:  {linear_x: -0.15, angular_z: -0.25, duration: 3}
+ twist_right_down: {linear_x: -0.15, angular_z:  0.15, duration: 3}
+ twist_left_up:    {linear_x:  0.15, angular_z:  0.15, duration: 3}
+ twist_right_up:   {linear_x:  0.15, angular_z: -0.15, duration: 3}
+ 
+ shutdown_costmaps: false
+ controller_frequency: 10.0
+ planner_patience: 5.0
+ controller_patience: 15.0
+ conservative_reset_dist: 3.0
+ planner_frequency: 5.0
+ oscillation_timeout: 10.0
+ oscillation_distance: 0.2
+ recovery_behavior_enabled: true

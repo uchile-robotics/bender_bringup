@@ -1,0 +1,5 @@
+MoveSlowAndClear:
+  clearing_distance: 0.3
+  limited_trans_speed: 0.15
+  limited_rot_speed: 0.1
+  limited_distance: 0.2
