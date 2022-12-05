@@ -20,7 +20,7 @@
   <include file="$(find bender_bringup)/launch/navigation/move_base.launch">
       <arg name="move_forward_only" value="$(arg move_forward_only)"/>
   </include>
-
+ 
   <!-- <include file="$(find bender_bringup)/launch/navigation/goal_server.launch" /> -->
 
 </launch>

@@ -3,7 +3,6 @@
 	<!-- ================================================== -->
 	<!-- ==================== PARAMETERS ================== -->
 	<!-- ================================================== -->
-	<remap from="/scan" to="/bender/sensors/laser_front/scan"/>
 
 	<!-- robot configuration -->
 	<arg name="model_type"     default="standard"/>
@@ -69,5 +68,11 @@
 
 	<!-- Mapper -->
 	<include file="$(find uchile_util)/launch/mapper.launch"/>
+
+	<include file="$(find merge_laser)/launch/dp2laser.launch"/>
+	<include file="$(find merge_laser)/launch/merge_laser.launch"/>
+
+	<include file="$(find bender_bringup)/launch/localization/localization.launch" />
+	<include file="$(find bender_bringup)/launch/navigation/navigation.launch" />
 
 </launch>
