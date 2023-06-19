@@ -8,8 +8,8 @@
 	<arg name="model_type"     default="standard"/>
 
 	<!-- robot simulation -->
-	<arg name="robot"      default="gazebo"/> <!-- { real, gazebo, stage } -->
-	<arg name="worldname"  default="amtc"/>
+	<arg name="robot"      default="real"/> <!-- { real, gazebo, stage } -->
+	<arg name="worldname"  default="stage"/>
 
 
 	<!-- ================================================== -->
@@ -31,10 +31,6 @@
 	<!-- Robot Joystick -->
 	<include file="$(find bender_joy)/launch/joysticks.launch"/>
 
-	<!-- base cmd_vel_mux -->
-	<include file="$(find uchile_cmd_vel_mux)/launch/mux.launch"/>
-
-	<!-- laser filtering: self filter and range filtering -->
-	<include file="$(find uchile_laser_pipeline)/launch/pipeline.launch"/>
+	
 
 </launch>
