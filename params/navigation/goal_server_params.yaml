@@ -11,7 +11,7 @@ goal_reach_degree_th: 10.0
 
 # listen topics 
 pose_topic: "/amcl_pose"
-goal_topic: "goal_server/goal"
+goal_topic: "/move_base/goal"
 obstacles_topic: "/move_base/global_costmap"
 
 # where to publish the initial pose
