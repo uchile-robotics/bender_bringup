@@ -6,14 +6,16 @@
     <include file="$(find bender_bringup)/launch/bender_minimal.launch"/>
     <include file="$(find uchile_pose_server)/launch/pose_server.launch"/>
 
-	<!-- Mapper -->
-	<include file="$(find uchile_util)/launch/mapper.launch"/>
+    <!-- Mapper -->
+    <include file="$(find uchile_util)/launch/mapper.launch"/>
 
-	<include file="$(find bender_bringup)/launch/localization/localization.launch">
-        <arg name="map_name" value="stage_real"/>
+    <include file="$(find bender_bringup)/launch/localization/localization.launch">
+        <arg name="map_name" value="$(arg map_name)"/>
     </include>
-	<include file="$(find bender_bringup)/launch/navigation/navigation.launch">
-        <arg name="map_name" value="stage_real"/>
+
+    <!-- Navigation -->
+    <include file="$(find bender_bringup)/launch/navigation/navigation.launch">
+        <arg name="map_name" value="$(arg map_name)"/>
     </include>  
 
     <group if="$(arg use_rviz)">
