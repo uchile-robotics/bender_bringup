@@ -2,25 +2,17 @@
   <!-- Arguments -->
 
   <arg name="move_forward_only" default="true"/>
-  <arg name="map_name"  default="amtc"/>
-
-
-      <!-- static map server -->
-  <!--include file="$(find uchile_maps)/launch/map_server.launch">
-        <arg name="map_name" value="$(arg map_name)"/>
-	<arg name="robot" value="kobuki"/>
-  </include-->
-
-  	<!-- Map Server -->
-	<node pkg="map_server" type="map_server" name="map_server_2"
-		respawn="true" args="$(find uchile_maps)/maps/$(arg map_name).yaml"/>
+  <arg name="map_name"          default="amtc"/>
 
   <!-- move_base -->
-
   <include file="$(find bender_bringup)/launch/navigation/move_base.launch">
       <arg name="move_forward_only" value="$(arg move_forward_only)"/>
   </include>
  
   <!-- <include file="$(find bender_bringup)/launch/navigation/goal_server.launch" /> -->
-
+  <node name="goal_server_simple" pkg="uchile_nav" type="goal_server_simple" output="screen" respawn="true">
+    <!-- remap services -->
+    <!-- <remap from="goal_server/make_plan" to="/bender/nav/move_base/make_plan"/> -->
+	</node>
+  
 </launch>

@@ -18,6 +18,12 @@
 
 	<!-- simulator specific parameters -->
 	<arg name="gazebo_gui" default="true"/>
+	<arg name="x"          default="0"/>
+	<arg name="y"          default="0"/>
+	<arg name="theta"      default="0"/>
+	
+	
+	
 
 
 	<!-- ================================================== -->
@@ -32,6 +38,11 @@
 		<arg name="rqt_gui"      value="$(arg rqt_gui)"/>
 		<arg name="worldname"    value="$(arg worldname)"/>
 		<arg name="model_type"   value="$(arg model_type)"/>
+		<arg name="x" 		     value="$(arg x)"/>
+		<arg name="y"  			 value="$(arg y)"/>
+		<arg name="theta" 	 	 value="$(arg theta)"/>
+		
+		
 	</include>
 
 
@@ -69,10 +80,12 @@
 	<!-- Mapper -->
 	<include file="$(find uchile_util)/launch/mapper.launch"/>
 
-	<include file="$(find merge_laser)/launch/dp2laser.launch"/>
-	<include file="$(find merge_laser)/launch/merge_laser.launch"/>
-
-	<include file="$(find bender_bringup)/launch/localization/localization.launch" />
+	<include file="$(find bender_bringup)/launch/localization/localization.launch" >
+		<arg name="map_name" value="$(arg worldname)"/>
+	</include>
 	<include file="$(find bender_bringup)/launch/navigation/navigation.launch" />
 
+	<group if="$(arg rviz)">
+		<include file="$(find bender_rviz)/launch/rviz_launcher.launch"/>
+	</group>
 </launch>
