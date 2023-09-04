@@ -21,6 +21,16 @@
 	<arg name="x"          default="0"/>
 	<arg name="y"          default="0"/>
 	<arg name="theta"      default="0"/>
+
+	<!-- laser topics to merge -->
+	<arg name="laser1"		default="/bender/sensors/laser_front/scan" />
+	<arg name="laser2"		default="/bender/sensors/d435_camera/laser/scan" />
+
+	<!-- laser cropper params -->
+
+	<arg name="camera_fov_start_angle" default="-45" />
+	<arg name="camera_fov_end_angle"   default="45" />
+	<arg name="laser_topic"            default="bender/sensors/scan_multi" />
 	
 	
 	
@@ -41,8 +51,19 @@
 		<arg name="x" 		     value="$(arg x)"/>
 		<arg name="y"  			 value="$(arg y)"/>
 		<arg name="theta" 	 	 value="$(arg theta)"/>
-		
-		
+	</include>
+
+	<!-- Depthimage to laserscan and laser merger-->
+	<include file="$(find depthimage_to_laserscan)/launch/depth2laser_bender.launch">
+		<arg name="laser1"		value="$(arg laser1)" />
+		<arg name="laser2"		value="$(arg laser2)" />
+	</include>
+
+
+	<!-- Laser cropper -->
+	<include file="$(find urg_node)/launch/laser_cropper.launch">
+		<arg name="min_angle" 	value="$(arg camera_fov_start_angle)" />
+		<arg name="max_angle"   value="$(arg camera_fov_end_angle)" />
 	</include>
 
 
