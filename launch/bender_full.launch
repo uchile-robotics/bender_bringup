@@ -1,13 +1,42 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="map_name" default="stage_real"/>
-    <arg name="use_rviz" default="true"/>
-    
+    <arg name="map_name"   default="stage_real"/>
+    <arg name="use_rviz"   default="true"/>
+
+    <!-- laser topics to merge -->
+    <arg name="use_merger"      default="false"/>
+	<arg name="laser_full"		default="/bender/sensors/laser_front/scan" />
+	<arg name="laser_cropped"   default="/bender/sensors/laser_front/scan_cropped" />
+	<arg name="laser2"			default="/bender/sensors/d435_camera/laser/scan" />
+
+	<!-- laser cropper params -->
+	<arg name="camera_fov_start_angle" default="-45" />
+	<arg name="camera_fov_end_angle"   default="45" />
+	<arg name="laser_topic"            default="/bender/sensors/scan_multi" />
+
+
     <include file="$(find bender_bringup)/launch/bender_minimal.launch"/>
     <include file="$(find uchile_pose_server)/launch/pose_server.launch"/>
 
     <!-- Mapper -->
     <include file="$(find uchile_util)/launch/mapper.launch"/>
+
+    <group if="$(arg use_merger)">
+        <!-- Depthimage to laserscan and laser merger-->
+        <include file="$(find depthimage_to_laserscan)/launch/depth2laser_bender.launch">
+            <arg name="laser1"		value="$(arg laser_cropped)" />
+            <arg name="laser2"		value="$(arg laser2)" />
+        </include>
+
+        <!-- Laser cropper -->
+        <include file="$(find uchile_laser_pipeline)/launch/laser_cropper.launch">
+            <arg name="min_angle" 		value="$(arg camera_fov_start_angle)" />
+            <arg name="max_angle"   	value="$(arg camera_fov_end_angle)" />
+            <arg name="laser_topic_in"  value="$(arg laser_full)"/>
+            <arg name="laser_topic_out" value="$(arg laser_cropped)"/>
+            <arg name="run_urg"         value="false"/>	
+        </include>
+    </group>
 
     <include file="$(find bender_bringup)/launch/localization/localization.launch">
         <arg name="map_name" value="$(arg map_name)"/>
