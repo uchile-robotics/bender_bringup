@@ -9,11 +9,11 @@
     </include>
 
     <!-- Map analyzer -->
-    <include file="$(find uchile_maps)/launch/map_analyzer.launch"/>
+    <!-- <include file="$(find uchile_maps)/launch/map_analyzer.launch"/> -->
 
     <!-- amcl -->
     <node pkg="amcl" type="amcl" name="amcl" respawn="true" output="screen">
-        <remap from="/scan" to="/bender/sensors/scan_multi"/>
+        <remap from="/scan" to="/bender/sensors/laser_front/scan"/>
         <remap from="map" to="/map"/>
         <rosparam file="$(find bender_bringup)/params/localization/amcl.yaml" command="load"/>
     </node>
