@@ -14,6 +14,6 @@ map_type: costmap
 observation_sources: scan
 scan: {sensor_frame: bender/base_link, 
        data_type: LaserScan,
-       topic: /bender/sensors/laser_front/scan_cropped,
+       topic: /bender/sensors/laser_front/scan_gazebo,
        marking: true, 
        clearing: true}

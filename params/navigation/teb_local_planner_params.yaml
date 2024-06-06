@@ -1,6 +1,6 @@
 TebLocalPlannerROS:
 
- odom_topic: bender/odom
+ odom_topic: /bender/nav/odom
     
  # Trajectory
   

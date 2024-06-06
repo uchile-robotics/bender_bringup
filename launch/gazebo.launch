@@ -55,16 +55,14 @@
 
 	<!-- Depthimage to laserscan and laser merger-->
 	<include file="$(find depthimage_to_laserscan)/launch/depth2laser_bender.launch">
-		<arg name="laser1"		value="$(arg laser1)" />
-		<arg name="laser2"		value="$(arg laser2)" />
 	</include>
 
 
 	<!-- Laser cropper -->
-	<include file="$(find urg_node)/launch/laser_cropper.launch">
+	<!-- <include file="$(find urg_node)/launch/laser_cropper.launch">
 		<arg name="min_angle" 	value="$(arg camera_fov_start_angle)" />
 		<arg name="max_angle"   value="$(arg camera_fov_end_angle)" />
-	</include>
+	</include> -->
 
 
 	<!-- ================================== -->
