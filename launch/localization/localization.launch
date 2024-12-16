@@ -8,7 +8,7 @@
     <arg name="type"      default="amcl"/> 
 
     <!-- This is the name of the map to be loaded on the map server -->
-    <arg name="map_name"  default="amtc"/>
+    <arg name="map_name"  default="stage_nov_2024"/>
 
     <!-- launch desired localization model -->
     <include file="$(find bender_bringup)/launch/localization/$(arg type).launch.xml">

@@ -15,7 +15,7 @@
 		this file to start the mapping process.
 
 		When you are satisfied with the map, run:
-			rosrun map_server map_saver
+			rosrun map_server map_saver -f map_name
 	 -->
 	<!-- Mapping Node -->
 	<include file="$(find bender_bringup)/launch/localization/localization.launch">

@@ -1,19 +1,36 @@
 obstacle_range: 3.0
 raytrace_range: 3.5
 
-#footprint: [[-0.30,-0.33],[-0.30,0.33],[0.2,0.33],[0.27,0],[0.2,-0.33]]
-footprint: [[-0.26,-0.26],[-0.26,0.26],[0.25,0.25],[0.25,-0.25]]
-footprint_padding: 0.01
+# if you're looking bender from above, with its front facing up, then
+# the coordinate system for its footprint is like:
+#     ^ x
+#     | 
+# y<--- 
+# according to ROS REP103
+
+# the footprint lines are drawn in order
+# first the line between the first and second points
+# then the second and the third and so on.
+ 
+footprint: [[-0.245,-0.2], # rear right
+            [-0.245,0.2], # rear left
+            [0,0.3], # left side
+            [0.2,0.20], # front left
+            [0.27,0], # front
+            [0.2,-0.20], # front right
+            [0, -0.3]] # right side
+# footprint: [[-0.26,-0.3],[-0.26,0.3],[0.25,0.3],[0.25,-0.3]]
+footprint_padding: 0.02
 #robot_radius: 0.32
 
-inflation_radius: .3 # chantar 04 
-cost_scaling_factor: 3.0 #3.0
+inflation_radius: .04 # chantar 04 
+cost_scaling_factor: .05 #3.0
 
 map_type: costmap
 
 observation_sources: scan
 scan: {sensor_frame: bender/base_link, 
        data_type: LaserScan,
-       topic: /bender/sensors/laser_front/scan_gazebo,
+       topic: /bender/sensors/laser_front/scan,
        marking: true, 
        clearing: true}
