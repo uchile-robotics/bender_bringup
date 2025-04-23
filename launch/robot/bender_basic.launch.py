@@ -5,13 +5,13 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='rosaria2',
-            executable='rosaria2',
+            executable='rosaria_node',
             name='rosaria2',
             output='screen',
         ),
         Node(
             package='urg_node2',
-            executable='urg_node2',
+            executable='urg_node2_node',
             name='urg_node2',
             output='screen',
         ),
