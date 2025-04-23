@@ -1,17 +1,18 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.8)
 project(bender_bringup)
 
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  roslib
-  rospy
-  std_msgs
-  std_srvs
-  uchile_msgs
-  uchile_srvs
-)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
+find_package(ament_cmake REQUIRED)
+
+# Instalar launch files
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}/
+)
 ###################################
 ## catkin specific configuration ##
 ###################################
-catkin_package()
+ament_package()
