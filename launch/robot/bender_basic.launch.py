@@ -5,7 +5,7 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='rosaria2',
-            executable='rosaria_node',
+            executable='rosaria2_node',
             name='rosaria2',
             output='screen',
         ),
