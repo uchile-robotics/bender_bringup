@@ -42,6 +42,14 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}],
     )
 
+    behavior_server = LifecycleNode(
+        package='nav2_behaviors',
+        executable='behavior_server',
+        name='behavior_server',
+        output='screen',
+        parameters=[params_file],
+    )
+
     bt_navigator = LifecycleNode(
         package='nav2_bt_navigator',
         executable='bt_navigator',
@@ -70,6 +78,7 @@ def generate_launch_description():
             'node_names': [
                 'controller_server',
                 'planner_server',
+                'behavior_server',
                 'bt_navigator',
                 'recoveries_server'
             ]
@@ -81,6 +90,7 @@ def generate_launch_description():
         bender_localization,
         controller_server,
         planner_server,
+        behavior_server,
         bt_navigator,
         recoveries_server,
         lifecycle_manager
