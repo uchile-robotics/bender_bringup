@@ -12,7 +12,15 @@ install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}/
 )
-###################################
-## catkin specific configuration ##
-###################################
+
+# Instalar archivos de mapas y parámetros
+install(
+  DIRECTORY maps/
+  DESTINATION share/${PROJECT_NAME}/maps/
+)
+
+install(
+  DIRECTORY params/
+  DESTINATION share/${PROJECT_NAME}/params/
+)
 ament_package()

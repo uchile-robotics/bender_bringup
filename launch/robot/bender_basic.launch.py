@@ -36,13 +36,13 @@ def generate_launch_description():
     # Comando para configurar el nodo
     configure_cmd = ExecuteProcess(
         cmd=['ros2', 'lifecycle', 'set', '/urg_node2', 'configure'],
-        output='screen'
+        output='log'
     )
 
     # Comando para activar el nodo
     activate_cmd = ExecuteProcess(
         cmd=['ros2', 'lifecycle', 'set', '/urg_node2', 'activate'],
-        output='screen'
+        output='log'
     )
 
     return LaunchDescription([

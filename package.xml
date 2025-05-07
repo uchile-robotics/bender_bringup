@@ -15,6 +15,8 @@
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
+  <exec_depend>nav2_map_server</exec_depend>
+
 
   <!-- For tests -->
   <test_depend>ament_lint_auto</test_depend>
