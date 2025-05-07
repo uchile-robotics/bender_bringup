@@ -25,7 +25,7 @@ def generate_launch_description():
             {'yaml_filename': map_yaml_file} 
         ]
     )
-    amcl_node = Node(
+    amcl_node = LifecycleNode(
         package='nav2_amcl',
         executable='amcl',
         name='amcl',
@@ -34,21 +34,10 @@ def generate_launch_description():
         parameters=[amcl_params],
     )
     
-    configure_cmd = ExecuteProcess(
-        cmd=['ros2', 'lifecycle', 'set', '/map_server', 'configure'],
-        output='log'
-    )
-
-    # Comando para activar el nodo
-    activate_cmd = ExecuteProcess(
-        cmd=['ros2', 'lifecycle', 'set', '/map_server', 'activate'],
-        output='log'
-    )
+    
 
     return LaunchDescription([
         map_server_node,
-        TimerAction(period=0.5, actions=[configure_cmd]),
-        TimerAction(period=1.0, actions=[activate_cmd]),
         amcl_node
     ])
 
