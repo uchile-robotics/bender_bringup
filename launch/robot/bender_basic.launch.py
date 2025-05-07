@@ -47,8 +47,8 @@ def generate_launch_description():
 
     return LaunchDescription([
         urg_node,
-        TimerAction(period=0.1, actions=[configure_cmd]),
-        TimerAction(period=0.2, actions=[activate_cmd]),
+        TimerAction(period=0.5, actions=[configure_cmd]),
+        TimerAction(period=1.0, actions=[activate_cmd]),
         rosaria2_node,
         laser_tf
     ])
