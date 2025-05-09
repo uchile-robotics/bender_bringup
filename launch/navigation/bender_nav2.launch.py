@@ -90,13 +90,6 @@ def generate_launch_description():
         parameters=[behavior_params],
     )
 
-    behavior_server = LifecycleNode(
-        package='nav2_behaviors',
-        executable='behavior_server',
-        name='behavior_server',
-        output='screen',
-        parameters=[planner_params],
-    )
 
     bt_navigator = LifecycleNode(
         package='nav2_bt_navigator',
@@ -105,15 +98,6 @@ def generate_launch_description():
         namespace='',
         output='screen',
         parameters=[bt_params],
-    )
-
-    behavior_server = LifecycleNode(
-        package='nav2_behaviors',
-        executable='behavior_server',
-        name='behavior_server',
-        namespace='',
-        output='screen',
-        parameters=[behavior_params],
     )
 
     waypoint_follower = LifecycleNode(
