@@ -1,0 +1,8 @@
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 20.0
+    costmap_update_timeout: 1.0
+    service_introspection_mode: "disabled"
+    planner_plugins: ['GridBased']
+    GridBased:
+      plugin: 'nav2_navfn_planner::NavfnPlanner' # In Iron and older versions, "/" was used instead of "::"

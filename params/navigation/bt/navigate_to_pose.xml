@@ -1,0 +1,18 @@
+<root main_tree_to_execute="NavigateToPose">
+
+  <BehaviorTree ID="NavigateToPose">
+    <PipelineSequence name="main_pipeline">
+      <RateController hz="10.0">
+        <RecoveryNode number_of_retries="1" name="recovery_node">
+          <Sequence name="navigation_sequence">
+            <TransformAvailable timeout="1.0" target_frame="map" source_frame="base_link"/>
+            <ComputePathToPose name="compute_path" goal_blackboard_id="goal"/>
+            <FollowPath name="follow_path" path_blackboard_id="path"/>
+          </Sequence>
+        </RecoveryNode>
+      </RateController>
+    </PipelineSequence>
+    <GoalReached/>
+  </BehaviorTree>
+
+</root>
