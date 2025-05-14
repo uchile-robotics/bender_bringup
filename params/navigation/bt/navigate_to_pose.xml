@@ -6,8 +6,8 @@
         <RecoveryNode number_of_retries="1" name="recovery_node">
           <Sequence name="navigation_sequence">
             <TransformAvailable timeout="1.0" target_frame="map" source_frame="base_link"/>
-            <ComputePathToPose name="compute_path" goal_blackboard_id="goal"/>
-            <FollowPath name="follow_path" path_blackboard_id="path"/>
+            <ComputePathToPose ID="ComputePath_NavToPose" name="compute_path" goal_blackboard_id="goal"/>
+            <FollowPath ID="FollowPath_NavToPose" name="follow_path" path_blackboard_id="path"/>
           </Sequence>
         </RecoveryNode>
       </RateController>

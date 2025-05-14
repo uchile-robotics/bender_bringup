@@ -86,6 +86,7 @@ def generate_launch_description():
         package='nav2_behaviors',
         executable='behavior_server',
         name='behavior_server',
+        namespace='',
         output='screen',
         parameters=[behavior_params],
     )
@@ -114,6 +115,7 @@ def generate_launch_description():
         package='nav2_lifecycle_manager',
         executable='lifecycle_manager',
         name='lifecycle_manager',
+        namespace='',
         output='screen',
         parameters=[lifecycle_manager_params]
     )
@@ -125,7 +127,6 @@ def generate_launch_description():
         planner_server,
         behavior_server,
         bt_navigator,
-        behavior_server,
         waypoint_follower,
         lifecycle_manager
     ])
