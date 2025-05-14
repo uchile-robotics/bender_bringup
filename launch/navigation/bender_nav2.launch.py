@@ -10,6 +10,7 @@ import os
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
+    map_subscribe_transient_local = LaunchConfiguration('map_subscribe_transient_local')
 
     declare_use_sim_time = DeclareLaunchArgument(
         'use_sim_time',
@@ -17,42 +18,6 @@ def generate_launch_description():
         description='Use simulation (Gazebo) clock if true'
     )
     bringup_pkg = FindPackageShare('bender_bringup')
-
-    nav2_params_folder = PathJoinSubstitution([
-        bringup_pkg,
-        'params',
-        'navigation'
-    ])
-    
-    behavior_params = PathJoinSubstitution([
-        nav2_params_folder,
-        'behavior_server.yaml'
-    ])
-    
-    controller_params = PathJoinSubstitution([
-        nav2_params_folder,
-        'controller_server.yaml'
-    ])
-    
-    planner_params = PathJoinSubstitution([
-        nav2_params_folder,
-        'planner_server.yaml'
-    ])
-    
-    bt_params = PathJoinSubstitution([
-        nav2_params_folder,
-        'bt_navigator.yaml'
-    ])
-    
-    waypoint_follower_params = PathJoinSubstitution([
-        nav2_params_folder,
-        'waypoint_follower.yaml'
-    ])
-    
-    lifecycle_manager_params = PathJoinSubstitution([
-        nav2_params_folder,
-        'lifecycle_manager.yaml'
-    ])
 
     bender_localization = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -64,69 +29,32 @@ def generate_launch_description():
             ])
         )
     )
-    controller_server = LifecycleNode(
-        package='nav2_controller',
-        executable='controller_server',
-        name='controller_server',
-        namespace='',
-        output='screen',
-        parameters=[controller_params],
+    declare_use_sim_time = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='false',
+        description='Use simulation (Gazebo) clock if true'
     )
 
-    planner_server = LifecycleNode(
-        package='nav2_planner',
-        executable='planner_server',
-        name='planner_server',
-        namespace='',
-        output='screen',
-        parameters=[planner_params],
+    declare_map_subscribe_transient_local = DeclareLaunchArgument(
+        'map_subscribe_transient_local',
+        default_value='true',
+        description='Use transient local subscription for map'
     )
 
-    behavior_server = LifecycleNode(
-        package='nav2_behaviors',
-        executable='behavior_server',
-        name='behavior_server',
-        namespace='',
-        output='screen',
-        parameters=[behavior_params],
-    )
-
-
-    bt_navigator = LifecycleNode(
-        package='nav2_bt_navigator',
-        executable='bt_navigator',
-        name='bt_navigator',
-        namespace='',
-        output='screen',
-        parameters=[bt_params],
-    )
-
-    waypoint_follower = LifecycleNode(
-        package = 'nav2_waypoint_follower',
-        executable = 'waypoint_follower',
-        name = 'waypoint_follower',
-        namespace = '',
-        output = 'screen',
-        parameters = [waypoint_follower_params]
-    )
-
-    # Lifecycle Manager
-    lifecycle_manager = Node(
-        package='nav2_lifecycle_manager',
-        executable='lifecycle_manager',
-        name='lifecycle_manager',
-        namespace='',
-        output='screen',
-        parameters=[lifecycle_manager_params]
+    nav2_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            FindPackageShare('nav2_bringup'),
+            '/launch/navigation_launch.py'
+        ]),
+        launch_arguments={
+            'use_sim_time': use_sim_time,
+            'map_subscribe_transient_local': map_subscribe_transient_local,
+        }.items()
     )
 
     return LaunchDescription([
         declare_use_sim_time,
-        bender_localization,
-        controller_server,
-        planner_server,
-        behavior_server,
-        bt_navigator,
-        waypoint_follower,
-        lifecycle_manager
+        declare_map_subscribe_transient_local,
+        nav2_launch,
+        bender_localization
     ])

@@ -8,7 +8,7 @@ bt_navigator:
     service_intropection_mode: "disabled"
     default_nav_to_pose_bt_xml: $(find-pkg-share bender_bringup)/params/navigation/bt/navigate_to_pose.xml
     default_nav_through_poses_bt_xml: $(find-pkg-share bender_bringup)/params/navigation/bt/navigate_through_poses.xml
-    always_reload_bt_xml: false
+    always_reload_bt_xml: true
     goal_blackboard_id: goal
     goals_blackboard_id: goals
     path_blackboard_id: path
@@ -58,3 +58,6 @@ bt_navigator:
       - route
       - undock_robot
       - wait
+    follow_path_error_code: 10
+    compute_path_error_code: 20
+    
