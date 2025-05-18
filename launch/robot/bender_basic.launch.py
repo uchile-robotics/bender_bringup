@@ -5,38 +5,32 @@ from launch.substitutions import PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.substitutions import FindPackageShare
 
-import os
+# This launch file only launches the lidar and the base controller
 
 def generate_launch_description():
-    urg_node_dir = FindPackageShare('urg_node2')
     bringup_pkg = FindPackageShare('bender_bringup')
-
-    base_params = PathJoinSubstitution([
-        bringup_pkg,
-        'params',
-        'robot',
-        'pioneer.yaml'
-    ])
     urg_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
-                urg_node_dir,
+                bringup_pkg,
                 'launch',
+                'robot',
                 'urg_node2.launch.py'
             ])
         )
     )
 
     
-
-    rosaria2_node = Node(
-        package='rosaria2',
-        executable='rosaria2_node',
-        name='rosaria2',
-        output='screen',
-        parameters=[base_params]
+    rosaria2_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([
+                bringup_pkg,
+                'launch',
+                'robot',
+                'urg_node2.launch.py'
+            ])
+        )
     )
-
     
     
 
