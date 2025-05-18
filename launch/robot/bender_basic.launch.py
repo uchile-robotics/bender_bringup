@@ -46,11 +46,11 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        rosaria2_node,
+        laser_tf,
         urg_node,
         TimerAction(period=0.5, actions=[configure_cmd]),
         TimerAction(period=1.0, actions=[activate_cmd]),
-        rosaria2_node,
-        laser_tf
     ])
 
 
