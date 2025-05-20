@@ -32,7 +32,8 @@ def generate_launch_description():
     # Set the parameter file path
     config_file_path = os.path.join(
         get_package_share_directory('bender_bringup'),
-        'config',
+        'params',
+        'robot',
         'hokuyo.yaml'
     )
 

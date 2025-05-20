@@ -27,7 +27,7 @@ def generate_launch_description():
                 bringup_pkg,
                 'launch',
                 'robot',
-                'urg_node2.launch.py'
+                'rosaria2.launch.py'
             ])
         )
     )
