@@ -5,8 +5,9 @@ from launch.substitutions import PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.substitutions import FindPackageShare
 
-# This launch file only launches the lidar and the base controller
-
+# This launch runs the same as the bender_basic launch and launches also Bender's TF
+# also launches the localization and navigation, so it centralizes it to a single
+# launch file
 def generate_launch_description():
     bringup_pkg = FindPackageShare('bender_bringup')
     description_pkg = FindPackageShare('bender_description')
@@ -22,6 +23,7 @@ def generate_launch_description():
             ])
         )
     )
+ 
     basic_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
@@ -32,14 +34,34 @@ def generate_launch_description():
             ])
         )
     )
-    
-    
-    
-    
+ 
+    localization_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([
+                bringup_pkg,
+                'launch',
+                'localization',
+                'localization_launch.py'
+            ])
+        )
+    )
+ 
+    navigation_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([
+                bringup_pkg,
+                'launch',
+                'navigation',
+                'navigation_launch.py'
+            ])
+        )
+    )
 
     return LaunchDescription([
         display_node,
-        basic_node
+        basic_node,
+        localization_node,
+        navigation_node
     ])
 
 

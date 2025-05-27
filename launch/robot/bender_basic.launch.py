@@ -8,14 +8,16 @@ from launch_ros.substitutions import FindPackageShare
 # This launch file only launches the lidar and the base controller
 
 def generate_launch_description():
-    bringup_pkg = FindPackageShare('bender_bringup')
+    base_pkg = FindPackageShare('bender_bringup')
+    sensor_pkg = FindPackageShare('bender_sensors')
     urg_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
-                bringup_pkg,
+                sensor_pkg,
                 'launch',
-                'robot',
-                'urg_node2.launch.py'
+                'lidar',
+                'hokuyo',
+                'hokuyo.launch.py'
             ])
         )
     )
@@ -24,9 +26,8 @@ def generate_launch_description():
     rosaria2_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
-                bringup_pkg,
+                base_pkg,
                 'launch',
-                'robot',
                 'rosaria2.launch.py'
             ])
         )
