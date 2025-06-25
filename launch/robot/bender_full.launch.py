@@ -35,33 +35,9 @@ def generate_launch_description():
         )
     )
  
-    # localization_node = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         PathJoinSubstitution([
-    #             bringup_pkg,
-    #             'launch',
-    #             'localization',
-    #             'localization_launch.py'
-    #         ])
-    #     )
-    # )
- 
-    # navigation_node = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource(
-    #         PathJoinSubstitution([
-    #             bringup_pkg,
-    #             'launch',
-    #             'navigation',
-    #             'navigation_launch.py'
-    #         ])
-    #     )
-    # )
-
     return LaunchDescription([
         display_node,
         basic_node,
-        # localization_node,
-        # navigation_node
     ])
 
 

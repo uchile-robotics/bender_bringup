@@ -7,18 +7,15 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
-# Instalar launch files
 install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}/
 )
 
-# Instalar archivos de mapas y parámetros
 install(
   DIRECTORY maps/
   DESTINATION share/${PROJECT_NAME}/maps/
 )
-
 install(
   DIRECTORY params/
   DESTINATION share/${PROJECT_NAME}/params/
