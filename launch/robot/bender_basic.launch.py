@@ -4,18 +4,19 @@ from launch.actions import IncludeLaunchDescription
 from launch.substitutions import PathJoinSubstitution
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.substitutions import FindPackageShare
+from ament_index_python.packages import get_package_share_directory
 import os
 # This launch file launches the lidar, the base controller and a teleop node
 
 def generate_launch_description():
     base_pkg = FindPackageShare('bender_base')
     sensor_pkg = FindPackageShare('bender_sensors')
-    twist_mux_params = os.path.join(
-        os.get_package_share_directory('bender_sensors'),
+    joy_pkg = FindPackageShare('bender_joy')
+    twist_mux_params = PathJoinSubstitution([
+        joy_pkg,
         'params',
-        'joy',
         'twist_mux.yaml'
-    )
+    ])
     
     rosaria2_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -40,9 +41,8 @@ def generate_launch_description():
     joy_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
-                sensor_pkg,
+                joy_pkg,
                 'launch',
-                'joy',
                 'joystick.launch.py'
             ])
         )
@@ -52,8 +52,8 @@ def generate_launch_description():
             package="twist_mux",
             executable="twist_mux",
             parameters=[twist_mux_params],
-            remappings=[('/cmd_vel_out','/diff_cont/cmd_vel_unstamped')] # TODO: check base topic in order to do correct remapping
-        )
+            remappings=[('/cmd_vel_out','/cmd_vel')]
+    )
     return LaunchDescription([
         lidar_node,
         rosaria2_node,
