@@ -55,12 +55,8 @@ def generate_launch_description():
             remappings=[('/cmd_vel_out','/cmd_vel')]
     )
     return LaunchDescription([
+        joy_node,
         lidar_node,
         rosaria2_node,
-        joy_node,
         twist_mux
     ])
-
-
-
-
