@@ -133,11 +133,11 @@ controller_server:
       yaw_goal_tolerance: 0.25
     FollowPath:
       plugin: "nav2_mppi_controller::MPPIController"
-      time_steps: 100
+      time_steps: 50
       model_dt: 0.05
       batch_size: 2000
       ax_max: 3.0
-      ax_min: -3.0
+      ax_min: -1.0
       ay_max: 3.0
       az_max: 3.5
       vx_std: 0.2
@@ -147,19 +147,20 @@ controller_server:
       vx_min: -0.35
       vy_max: 0.5
       wz_max: 1.9
-      iteration_count: 2
-      prune_distance: 2.0
+      iteration_count: 1
+      prune_distance: 1.7
       transform_tolerance: 0.1
-      temperature: 0.4
+      temperature: 0.3
       gamma: 0.015
       motion_model: "DiffDrive"
-      visualize: true
+      visualize: false
       regenerate_noises: true
       TrajectoryVisualizer:
         trajectory_step: 5
         time_step: 3
       AckermannConstraints:
         min_turning_r: 0.1
+
       critics: [
         "ConstraintCritic", "CostCritic", "GoalCritic",
         "GoalAngleCritic", "PathAlignCritic", "PathFollowCritic",
@@ -181,7 +182,7 @@ controller_server:
       PreferForwardCritic:
         enabled: true
         cost_power: 1
-        cost_weight: 20.0
+        cost_weight: 5.0
         threshold_to_consider: 0.5
       CostCritic:
         enabled: true
@@ -189,7 +190,7 @@ controller_server:
         cost_weight: 3.81
         near_collision_cost: 253
         critical_cost: 300.0
-        consider_footprint: true
+        consider_footprint: false
         collision_cost: 1000000.0
         near_goal_distance: 1.0
         trajectory_point_step: 2
@@ -224,7 +225,7 @@ controller_server:
 local_costmap:
   local_costmap:
     ros__parameters:
-      update_frequency: 10.0
+      update_frequency: 20.0
       publish_frequency: 2.0
       global_frame: odom
       robot_base_frame: base_link
@@ -233,7 +234,7 @@ local_costmap:
       height: 3
       resolution: 0.05
       footprint: "[[-0.245,-0.2], [-0.245,0.2], [0,0.29], [0.2,0.20], [0.27,0], [0.2,-0.20], [0, -0.29]]"
-      footprint_padding: 0.03
+      footprint_padding: 0.02
 
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
@@ -272,8 +273,9 @@ global_costmap:
       publish_frequency: 1.0
       global_frame: map
       robot_base_frame: base_link
+      # robot_radius: 0.22
       footprint: "[[-0.245,-0.2], [-0.245,0.2], [0,0.29], [0.2,0.20], [0.27,0], [0.2,-0.20], [0, -0.29]]"
-      footprint_padding: 0.03
+      footprint_padding: 0.02
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
@@ -378,7 +380,7 @@ velocity_smoother:
     scale_velocities: False
     feedback: "OPEN_LOOP"
     max_velocity: [0.5, 0.0, 2.0]
-    min_velocity: [-0.1, 0.0, -2.0]
+    min_velocity: [-0.2, 0.0, -2.0]
     max_accel: [2.5, 0.0, 3.2]
     max_decel: [-2.5, 0.0, -3.2]
     odom_topic: "odom"
@@ -391,7 +393,7 @@ collision_monitor:
     base_frame_id: "base_footprint"
     odom_frame_id: "odom"
     cmd_vel_in_topic: "cmd_vel_smoothed"
-    cmd_vel_out_topic: "cmd_vel_nav"
+    cmd_vel_out_topic: "cmd_vel"
     state_topic: "collision_monitor_state"
     transform_tolerance: 0.2
     source_timeout: 1.0
