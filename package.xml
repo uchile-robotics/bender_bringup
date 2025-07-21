@@ -15,7 +15,8 @@
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
-  <exec_depend>nav2_map_server</exec_depend>
+  <exec_depend>twist_mux</exec_depend>
+  <exec_depend>cartographer_ros</exec_depend>
   <exec_depend>joy</exec_depend>
   <exec_depend>teleop_twist_joy</exec_depend>
 
