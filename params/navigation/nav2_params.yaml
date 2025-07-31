@@ -136,8 +136,8 @@ controller_server:
       time_steps: 50
       model_dt: 0.05
       batch_size: 2000
-      ax_max: 2.0
-      ax_min: -1.0
+      ax_max: 1.0
+      ax_min: -0.5
       ay_max: 3.0
       az_max: 3.5
       vx_std: 0.2
@@ -387,8 +387,8 @@ velocity_smoother:
     feedback: "OPEN_LOOP"
     max_velocity: [0.5, 0.0, 2.0]
     min_velocity: [-0.2, 0.0, -2.0]
-    max_accel: [2.5, 0.0, 3.2]
-    max_decel: [-2.5, 0.0, -3.2]
+    max_accel: [1.0, 0.0, 3.2]
+    max_decel: [-1.0, 0.0, -3.2]
     odom_topic: "odom"
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
