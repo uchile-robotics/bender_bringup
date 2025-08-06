@@ -27,7 +27,7 @@ def generate_launch_description():
     localization_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
-                bringup_pkg, 'launch', 'localization', 'slam_toolbox.launch.py'
+                bringup_pkg, 'launch', 'localization', 'localization_launch.py'
             ])
         )
     )
