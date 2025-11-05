@@ -6,7 +6,7 @@ from ament_index_python.packages import get_package_share_directory
 import os
 
 def generate_launch_description():
-    pkg = get_package_share_directory('bender_bringup')
+    pkg = get_package_share_directory('jaime_bringup')
     cartographer_config_dir = os.path.join(
         pkg,
         'params',

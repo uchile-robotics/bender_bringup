@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>bender_bringup</name>
+  <name>jaime_bringup</name>
   <version>2.0.0</version>
-  <description>The bender_bringup package for ROS2 Jazzy</description>
+  <description>The jaime_bringup package for ROS2 Jazzy</description>
 
   <maintainer email="bender.devel@gmail.com">Bender Team - UChile Homebreakers</maintainer>
   <author email="bender.devel@gmail.com">Bender Team - UChile Homebreakers</author>

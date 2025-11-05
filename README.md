@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-- [Bender Bringup](#bender-bringup)
+- [Jaime Bringup](#jaime-bringup)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Overview](#overview)
@@ -27,7 +27,7 @@ It integrates the robot’s localization, navigation, and visualization systems 
 
 ## Overview
 
-`bender_bringup` is responsible for starting all core subsystems of the robot, including:
+`jaime_bringup` is responsible for starting all core subsystems of the robot, including:
 
 - **Localization** (AMCL, SLAM Toolbox, or Cartographer)
 - **Navigation** (Nav2 stack)
@@ -61,19 +61,19 @@ source install/setup.bash
 ## Package Structure
 
 ```bash
-bender_bringup/
+jaime_bringup/
 ├── launch/
 │   ├── localization/
-│   │   ├── bender_cartographer.launch.py
+│   │   ├── jaime_cartographer.launch.py
 │   │   ├── localization_launch.py
 │   │   └── slam_toolbox.launch.py
 │   ├── navigation/
 │   │   └── navigation_launch.py
 │   ├── robot/
-│   │   ├── bender_basic.launch.py
-│   │   ├── bender_full.launch.py
-│   │   └── bender_slam.launch.py
-│   └── tools/rviz/bender.rviz
+│   │   ├── jaime_basic.launch.py
+│   │   ├── jaime_full.launch.py
+│   │   └── jaime_slam.launch.py
+│   └── tools/rviz/jaime.rviz
 ├── maps/
 │   ├── env_30_may_2025/
 │   ├── quimica/
@@ -105,15 +105,15 @@ bender_bringup/
 Launch file that launches the base driver, LiDaR sensor and joystick.
 
 ```bash
-ros2 launch bender_bringup bender_basic.launch.py
+ros2 launch jaime_bringup jaime_basic.launch.py
 ```
 
 #### Full system
 
-Launches all core nodes: localization, navigation and the `bender_basic.launch.py` launch file
+Launches all core nodes: localization, navigation and the `jaime_basic.launch.py` launch file
 
 ```bash
-ros2 launch bender_bringup bender_full.launch.py
+ros2 launch jaime_bringup jaime_full.launch.py
 ```
 
 #### Slam Mode
@@ -121,7 +121,7 @@ ros2 launch bender_bringup bender_full.launch.py
 Launches the robot in SLAM (Simultaneous Localization and Mapping) mode to build a map of the environment
 
 ```bash
-ros2 launch bender_bringup bender_slam.launch.py
+ros2 launch jaime_bringup jaime_slam.launch.py
 ```
 
 #### Localization only
@@ -129,7 +129,7 @@ ros2 launch bender_bringup bender_slam.launch.py
 Useful for testing AMCL or SLAM Toolbox independently
 
 ```bash
-ros2 launch bender_bringup localization_launch.py
+ros2 launch jaime_bringup localization_launch.py
 ```
 
 #### Navigation only
@@ -137,7 +137,7 @@ ros2 launch bender_bringup localization_launch.py
 Starts the Nav2 stack using the selected map and parameter configuration.
 
 ```bash
-ros2 launch bender_bringup navigation_launch.py
+ros2 launch jaime_bringup navigation_launch.py
 ```
 
 ### Maps and Parameters

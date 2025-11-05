@@ -5,8 +5,8 @@ from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
-    bringup_pkg = FindPackageShare('bender_bringup')
-    description_pkg = FindPackageShare('bender_description')
+    bringup_pkg = FindPackageShare('jaime_bringup')
+    description_pkg = FindPackageShare('jaime_description')
 
     display_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -19,7 +19,7 @@ def generate_launch_description():
     basic_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
-                bringup_pkg, 'launch', 'robot', 'bender_basic.launch.py'
+                bringup_pkg, 'launch', 'robot', 'jaime_basic.launch.py'
             ])
         )
     )
