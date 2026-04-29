@@ -6,6 +6,8 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 
 def generate_launch_description():
+    # Obtener el directorio del paquete bender_description para los launch files
+    bender_description_dir = get_package_share_directory('bender_description')
 
     # 1. ros2 run bender_manipulation dynamixel_node.py
     dynamixel_node = Node(
@@ -28,14 +30,19 @@ def generate_launch_description():
         name='serial_encoder_node',
         output='screen'
     )
+
+    shoulder_control = Node(
+        package='bender_manipulation',
+        executable='shoulder_control.py',
+        name='shoulder_controller_node',
+        output='screen'
+    )
     odrive_node = Node(
         package='bender_manipulation',
         executable='oddrive.py',
         name='odrive_velocity_node',
         output='screen'
     )
-    # Obtener el directorio del paquete bender_description para los launch files
-    bender_description_dir = get_package_share_directory('bender_description')
 
     # 3. ros2 launch bender_description bender_move_group.launch.py
     move_group_launch = IncludeLaunchDescription(
@@ -58,5 +65,6 @@ def generate_launch_description():
         move_group_launch,
         moveit_rviz_launch,
         serial_encoder_node,
-        odrive_node
+        odrive_node,
+        shoulder_control
     ])
