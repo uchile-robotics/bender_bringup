@@ -26,7 +26,7 @@ def generate_launch_description():
     )
     serial_encoder_node = Node(
         package='bender_manipulation',
-        executable='serial_encoder_node.py',
+        executable='serial_encoder_node',
         name='serial_encoder_node',
         output='screen'
     )
@@ -44,17 +44,10 @@ def generate_launch_description():
         output='screen'
     )
 
-    # 3. ros2 launch bender_description bender_move_group.launch.py
-    move_group_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(bender_description_dir, 'launch', 'bender_move_group.launch.py')
-        )
-    )
 
-    # 4. ros2 launch bender_description bender_moveit_rviz.launch.py
-    moveit_rviz_launch = IncludeLaunchDescription(
+    bender_moveit = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(bender_description_dir, 'launch', 'bender_moveit_rviz.launch.py')
+            os.path.join(bender_description_dir, 'launch', 'bender_moveit.launch.py')
         )
     )
 
@@ -62,8 +55,7 @@ def generate_launch_description():
     return LaunchDescription([
         dynamixel_node,
         dynamixel_trajectory_bridge,
-        move_group_launch,
-        moveit_rviz_launch,
+        bender_moveit,
         serial_encoder_node,
         odrive_node,
         shoulder_control
