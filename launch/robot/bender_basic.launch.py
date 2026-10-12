@@ -17,7 +17,7 @@ def generate_launch_description():
         'params',
         'twist_mux.yaml'
     ])
-    
+
     rosaria2_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
@@ -27,17 +27,7 @@ def generate_launch_description():
             ])
         )
     )
-    lidar_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([
-                sensor_pkg,
-                'launch',
-                'lidar',
-                'rplidar_c1_launch.py'
-            ])
-        )
-    )
-    
+
     joy_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
@@ -46,17 +36,16 @@ def generate_launch_description():
                 'joystick.launch.py'
             ])
         )
-    ) 
+    )
 
     twist_mux = Node(
             package="twist_mux",
             executable="twist_mux",
             parameters=[twist_mux_params],
-            remappings=[('/cmd_vel_out','/cmd_vel')]
+            remappings=[('/cmd_vel_out','/bender/pioneer_base_controller/cmd_vel')]
     )
     return LaunchDescription([
         joy_node,
-        lidar_node,
         rosaria2_node,
         twist_mux
     ])
