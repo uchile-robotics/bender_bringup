@@ -70,9 +70,12 @@ bender_bringup/
 │   ├── navigation/
 │   │   └── navigation_launch.py
 │   ├── robot/
-│   │   ├── bender_basic.launch.py
-│   │   ├── bender_full.launch.py
-│   │   └── bender_slam.launch.py
+│   │   ├── bender_hardware.launch.py
+│   │   ├── bender_navigation.launch.py
+│   │   ├── bender_moveit.launch.py
+│   │   └── bender_full.launch.py
+│   ├── sim/
+│   │   └── gazebo.launch.py
 │   └── tools/rviz/bender.rviz
 ├── maps/
 │   ├── env_30_may_2025/
@@ -91,7 +94,8 @@ bender_bringup/
 | --------------------- | ----------------------------------------------------------------- |
 | `launch/localization` | Launch files for localization and SLAM modes                      |
 | `launch/navigation`   | Launch for the Nav2 navigation stack                              |
-| `launch/robot`        | Core bringup launch files for base, sensors, and full robot setup |
+| `launch/robot`        | Core bringup launch files: hardware, navigation, MoveIt and all-in-one |
+| `launch/sim`          | Gazebo simulation                                                 |
 | `launch/tools/rviz`   | RViz configuration for visualization                              |
 | `maps`                | Predefined maps with `.pgm` and `.yaml` pairs                     |
 | `params`              | Parameter files for localization, navigation, and maps            |
@@ -100,28 +104,59 @@ bender_bringup/
 
 ### Start the robot
 
-#### Basic setup
+The bringup is split so that the hardware can run on Bender's Raspberry Pi and the heavy nodes (Nav2, MoveIt) on a second computer, both on the same ROS 2 network.
 
-Launch file that launches the base driver, LiDaR sensor and joystick.
+#### Hardware (Raspberry Pi)
+
+Launches `robot_state_publisher`, `ros2_control` (namespace `/bender`) with its controllers, the LiDAR, the joystick and `twist_mux`.
 
 ```bash
-ros2 launch bender_bringup bender_basic.launch.py
+ros2 launch bender_bringup bender_hardware.launch.py
+```
+
+| Argument   | Default | Description                                                         |
+| ---------- | ------- | ------------------------------------------------------------------- |
+| `use_arms` | `true`  | Shoulders (ODrive), arms, grippers and head (Dynamixel)             |
+| `use_base` | `true`  | Pioneer base, e-stop broadcaster and `twist_mux`                    |
+| `use_joy`  | `true`  | Joystick teleop (only if `use_base` is true)                        |
+| `use_lidar`| `true`  | RPLidar C1 and its scan filter (publishes `/scan`)                  |
+
+```bash
+# Base only
+ros2 launch bender_bringup bender_hardware.launch.py use_arms:=false
+# Arms only
+ros2 launch bender_bringup bender_hardware.launch.py use_base:=false
+```
+
+#### Navigation
+
+Launches localization (AMCL) and Nav2. Use `slam:=true` to build a map with slam_toolbox instead of localizing. Arguments of the included launch files (`map`, `params_file`, ...) can also be passed here.
+
+```bash
+ros2 launch bender_bringup bender_navigation.launch.py
+ros2 launch bender_bringup bender_navigation.launch.py slam:=true
+```
+
+#### MoveIt
+
+Launches `move_group` and RViz (`use_rviz:=false` to skip it). Pass `use_base:=false` if the base is not running, so the static `world -> base_link` transform is published.
+
+```bash
+ros2 launch bender_bringup bender_moveit.launch.py
 ```
 
 #### Full system
 
-Launches all core nodes: localization, navigation and the `bender_basic.launch.py` launch file
+Everything on a single computer: hardware, navigation (if `use_base`) and MoveIt (if `use_arms`). Accepts `use_arms`, `use_base`, `use_joy`, `use_lidar`, `use_rviz` and `slam`.
 
 ```bash
 ros2 launch bender_bringup bender_full.launch.py
 ```
 
-#### Slam Mode
-
-Launches the robot in SLAM (Simultaneous Localization and Mapping) mode to build a map of the environment
+#### Simulation
 
 ```bash
-ros2 launch bender_bringup bender_slam.launch.py
+ros2 launch bender_bringup gazebo.launch.py
 ```
 
 #### Localization only

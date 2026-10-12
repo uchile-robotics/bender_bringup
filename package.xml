@@ -10,7 +10,15 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
   
   <!-- Dependencies needed at runtime -->
-  <exec_depend>rosaria2</exec_depend>
+  <exec_depend>bender_description</exec_depend>
+  <exec_depend>bender_hardware_interfaces</exec_depend>
+  <exec_depend>bender_joy</exec_depend>
+  <exec_depend>bender_moveit_config</exec_depend>
+  <exec_depend>bender_sensors</exec_depend>
+  <exec_depend>rplidar_ros</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>xacro</exec_depend>
   <exec_depend>urg_node2</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>launch</exec_depend>
