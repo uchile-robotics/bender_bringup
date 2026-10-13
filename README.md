@@ -20,7 +20,7 @@
 
 ## Introduction
 
-This package provides the launch configurations, parameter files, and map resources required to bring up the **Bender robot** on **ROS 2 Jazzy**.  
+This package provides the launch configurations, parameter files, and map resources required to bring up the **Bender robot** on **ROS 2 Jazzy**.
 It integrates the robot’s localization, navigation, and visualization systems into a unified launch structure.
 
 ---
@@ -147,7 +147,7 @@ ros2 launch bender_bringup bender_moveit.launch.py
 
 #### Full system
 
-Everything on a single computer: hardware, navigation (if `use_base`) and MoveIt (if `use_arms`). Accepts `use_arms`, `use_base`, `use_joy`, `use_lidar`, `use_rviz` and `slam`.
+Everything on a single computer: hardware, navigation (if `use_base`) and MoveIt (if `use_arms`). Accepts `use_arms`, `use_base`, `use_joy`, `use_lidar`, `use_rviz` and `slam`. With `use_sim:=true` it starts Gazebo instead of the real hardware and runs everything on simulation time.
 
 ```bash
 ros2 launch bender_bringup bender_full.launch.py
@@ -156,7 +156,7 @@ ros2 launch bender_bringup bender_full.launch.py
 #### Simulation
 
 ```bash
-ros2 launch bender_bringup gazebo.launch.py
+ros2 launch bender_bringup bender_full.launch.py use_sim:=true
 ```
 
 #### Localization only
@@ -169,7 +169,7 @@ ros2 launch bender_bringup localization_launch.py
 
 #### Navigation only
 
-Starts the Nav2 stack using the selected map and parameter configuration.
+Starts the Nav2 stack using the default map and parameter configuration.
 
 ```bash
 ros2 launch bender_bringup navigation_launch.py

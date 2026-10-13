@@ -1,8 +1,9 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, GroupAction, IncludeLaunchDescription
 from launch.conditions import IfCondition, UnlessCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch_ros.actions import SetParameter
 from launch_ros.substitutions import FindPackageShare
 
 # launch that runs moveit stuff
@@ -21,6 +22,7 @@ def include_moveit_launch(launch_file, condition=None):
 def generate_launch_description():
     use_rviz = LaunchConfiguration('use_rviz')
     use_base = LaunchConfiguration('use_base')
+    use_sim_time = LaunchConfiguration('use_sim_time')
 
     declare_use_rviz = DeclareLaunchArgument(
         'use_rviz', default_value='true',
@@ -29,6 +31,11 @@ def generate_launch_description():
     declare_use_base = DeclareLaunchArgument(
         'use_base', default_value='true',
         description='Set to false if the base is not running, to publish the static world -> base_link TF'
+    )
+
+    declare_use_sim_time = DeclareLaunchArgument(
+        'use_sim_time', default_value='false',
+        description='Use simulation (Gazebo) clock if true'
     )
 
     # Con la base andando, base_link ya cuelga de odom (diff drive): publicar además
@@ -48,7 +55,11 @@ def generate_launch_description():
     return LaunchDescription([
         declare_use_rviz,
         declare_use_base,
-        static_virtual_joint_tfs,
-        move_group,
-        moveit_rviz,
+        declare_use_sim_time,
+        GroupAction([
+            SetParameter('use_sim_time', use_sim_time),
+            static_virtual_joint_tfs,
+            move_group,
+            moveit_rviz,
+        ]),
     ])
