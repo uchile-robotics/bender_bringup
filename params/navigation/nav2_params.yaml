@@ -126,25 +126,38 @@ controller_server:
     # Goal checker parameters
     simple_goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.10
+      yaw_goal_tolerance: 0.10
 
+    # RotationShim envuelve a MPPI solo para la llegada: al entrar en la tolerancia xy
+    # deja de avanzar y gira en el lugar hasta el yaw de la meta (sin esto MPPI corregía
+    # el yaw avanzando y se pasaba). angular_dist_threshold en pi para que nunca gire en
+    # el lugar al partir. Los parámetros de MPPI siguen bajo FollowPath.
     FollowPath:
-      plugin: "nav2_mppi_controller::MPPIController"
+      plugin: "nav2_rotation_shim_controller::RotationShimController"
+      primary_controller: "nav2_mppi_controller::MPPIController"
+      angular_dist_threshold: 3.14
+      forward_sampling_distance: 0.5
+      rotate_to_heading_angular_vel: 1.0
+      max_angular_accel: 3.2
+      simulate_ahead_time: 1.0
+      rotate_to_goal_heading: true
       time_steps: 50
       model_dt: 0.05
       batch_size: 2000
       ax_max: 1.0
       ax_min: -0.5
       ay_max: 0.0
-      az_max: 3.5
+      az_max: 3.2
       vx_std: 0.2
       vy_std: 0.0
       wz_std: 0.4
       vx_max: 0.5
       vx_min: -0.2
       vy_max: 0.0
-      wz_max: 1.9
+      # Igual que max_velocity/max_accel del velocity_smoother: si MPPI planifica con más
+      # de lo que deja pasar el smoother, el robot gira menos de lo previsto y se abre.
+      wz_max: 1.0
       iteration_count: 1
       prune_distance: 1.7
       transform_tolerance: 0.1

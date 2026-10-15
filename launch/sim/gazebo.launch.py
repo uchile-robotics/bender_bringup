@@ -27,7 +27,7 @@ def generate_launch_description():
     )
 
     world = LaunchConfiguration("world")
-    world_path = os.path.join(pkg_share, "worlds", "workshop.world")
+    world_path = os.path.join(pkg_share, "worlds", "stage.sdf")
     declare_world = DeclareLaunchArgument("world", default_value=world_path)
 
     urdf_path = PathJoinSubstitution([pkg_share, "urdf", "bender.xacro"])
@@ -101,6 +101,26 @@ def generate_launch_description():
         arguments=["--ros-args", "-p", f"config_file:={bridge_params}"],
     )
 
+    # Pose real de los modelos en Gazebo, para comparar con la odometría y AMCL.
+    # El tópico lleva el nombre del <world> del SDF (stage.sdf usa "stage").
+    world_name = LaunchConfiguration("world_name")
+    declare_world_name = DeclareLaunchArgument(
+        "world_name",
+        default_value="stage",
+        description="Name of the <world> in the SDF, used for the ground truth topic",
+    )
+    ground_truth_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        name="ground_truth_bridge",
+        arguments=[
+            ["/world/", world_name, "/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V"],
+            "--ros-args",
+            "-r",
+            ["/world/", world_name, "/dynamic_pose/info:=/gz_ground_truth"],
+        ],
+    )
+
     # image bridge
     start_gazebo_ros_image_bridge_cmd = Node(
         package="ros_gz_image",
@@ -147,9 +167,11 @@ def generate_launch_description():
             declare_rviz,
             declare_use_sim_time,
             declare_world_tf,
+            declare_world_name,
             start_gazebo_server_cmd,
             start_gazebo_ros_spawner_cmd,
             ros_gz_bridge,
+            ground_truth_bridge,
             start_gazebo_ros_image_bridge_cmd,
             robot_state_node,
             static_tf,
