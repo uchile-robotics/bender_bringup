@@ -1,7 +1,7 @@
 image: stage_sim.pgm
 mode: trinary
 resolution: 0.050
-origin: [-0.361, -0.904, 0]
+origin: [-0.336, -0.891, 0]
 negate: 0
 occupied_thresh: 0.65
 free_thresh: 0.196

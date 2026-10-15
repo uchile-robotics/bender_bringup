@@ -7,30 +7,30 @@ amcl:
     # Probabilistic Robotics, p136; this model uses the noise parameters odom_alpha_1 through odom_alpha4,
     # as defined in the book.
     #
-    # If ~odom_model_type is "omni" then we use a custom model for an omni-directional base, which uses 
+    # If ~odom_model_type is "omni" then we use a custom model for an omni-directional base, which uses
     # odom_alpha_1 through odom_alpha_5. The meaning of the first four parameters is similar to that for
     # the "diff" model. The fifth parameter capture the tendency of the robot to translate (without rotating)
     # perpendicular to the observed direction of travel.
 
 
-    # Which model to use, either "diff", "omni", "diff-corrected" or "omni-corrected". . 
+    # Which model to use, either "diff", "omni", "diff-corrected" or "omni-corrected". .
     odom_model_type: diff-corrected
 
-    # Specifies the expected noise in odometry's rotation estimate from the rotational component of the robot's motion. 
+    # Specifies the expected noise in odometry's rotation estimate from the rotational component of the robot's motion.
     # (default: 0.2)
-    alpha1: 0.05
+    alpha1: 0.4
 
-    # Specifies the expected noise in odometry's rotation estimate from translational component of the robot's motion. 
+    # Specifies the expected noise in odometry's rotation estimate from translational component of the robot's motion.
     # (default: 0.2)
     alpha2: 0.005
 
-    # Specifies the expected noise in odometry's translation estimate from the translational component of the robot's motion. 
+    # Specifies the expected noise in odometry's translation estimate from the translational component of the robot's motion.
     # (default: 0.2)
     alpha3: 0.005
 
-    # Specifies the expected noise in odometry's translation estimate from the rotational component of the robot's motion. 
+    # Specifies the expected noise in odometry's translation estimate from the rotational component of the robot's motion.
     # (default: 0.2)
-    alpha4: 0.1
+    alpha4: 0.2
     base_frame_id: "base_link"
     service_introspection_mode: "disabled"
     beam_skip_distance: 0.5
@@ -288,7 +288,7 @@ global_costmap:
       robot_base_frame: base_link
       # robot_radius: 0.22
       # footprint: "[[-0.245,-0.2], [-0.245,0.2], [0,0.29], [0.2,0.20], [0.27,0], [0.2,-0.20], [0, -0.29]]"
-      
+
       # footprint: "[[0.05, 0.33],[0.05, 0.23],[0.32, 0.23],[0.32, -0.23],[0.05, -0.23],[0.05, -0.33],[-0.05, -0.33],[-0.05, -0.23],[-0.32, -0.23],[-0.32, 0.23],[-0.05, 0.23],[-0.05, 0.33]]"
 
       footprint: "[[0.045, 0.3], [0.045, 0.23], [0.27, 0.23], [0.27, -0.23], [0.045, -0.23], [0.045, -0.3], [-0.045, -0.3], [-0.045, -0.23], [-0.27, -0.23], [-0.27, 0.23], [-0.045, 0.23], [-0.045, 0.3]]"
