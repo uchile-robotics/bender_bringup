@@ -45,13 +45,16 @@ def generate_launch_description():
     use_base = LaunchConfiguration('use_base')
     use_joy = LaunchConfiguration('use_joy')
     use_lidar = LaunchConfiguration('use_lidar')
+    use_camera = LaunchConfiguration('use_camera')
+    camera_device = LaunchConfiguration('camera_device')
+    camera_frame = LaunchConfiguration('camera_frame')
 
     declare_use_arms = DeclareLaunchArgument(
         'use_arms', default_value='true',
         description='Start shoulders, arms, grippers and head (ODrive + Dynamixel)'
     )
     declare_use_base = DeclareLaunchArgument(
-        'use_base', default_value='true',
+        'use_base', default_value='false',
         description='Start the Pioneer base, the e-stop broadcaster and twist_mux'
     )
     declare_use_joy = DeclareLaunchArgument(
@@ -59,8 +62,20 @@ def generate_launch_description():
         description='Start the joystick teleop (only if use_base is true)'
     )
     declare_use_lidar = DeclareLaunchArgument(
-        'use_lidar', default_value='true',
+        'use_lidar', default_value='false',
         description='Start the RPLidar C1 and its scan filter (publishes /scan)'
+    )
+    declare_use_camera = DeclareLaunchArgument(
+        'use_camera', default_value='true',
+        description='Start the USB camera (publishes /usb_cam/image_raw)'
+    )
+    declare_camera_device = DeclareLaunchArgument(
+        'camera_device', default_value='/dev/usb_cam',
+        description='Video device of the USB camera'
+    )
+    declare_camera_frame = DeclareLaunchArgument(
+        'camera_frame', default_value='usb_cam_link',
+        description='frame_id of the published images'
     )
 
     urdf_path = PathJoinSubstitution([description_pkg, 'urdf', 'bender.xacro'])
@@ -117,6 +132,19 @@ def generate_launch_description():
         condition=IfCondition(use_lidar)
     )
 
+    camera_node = Node(
+        package='usb_cam',
+        executable='usb_cam_node_exe',
+        name='usb_cam',
+        namespace='usb_cam',
+        parameters=[
+            PathJoinSubstitution([sensors_pkg, 'params', 'camera', 'usb_cam.yaml']),
+            {'video_device': camera_device, 'frame_id': camera_frame},
+        ],
+        output='screen',
+        condition=IfCondition(use_camera)
+    )
+
     # Va junto al hardware para que el joystick mantenga la prioridad sobre Nav2
     # aunque se caiga el computador de arriba o la red.
     twist_mux = Node(
@@ -132,6 +160,9 @@ def generate_launch_description():
         declare_use_base,
         declare_use_joy,
         declare_use_lidar,
+        declare_use_camera,
+        declare_camera_device,
+        declare_camera_frame,
         robot_state_publisher,
         ros2_control_node,
         joint_state_broadcaster_spawner,
@@ -139,5 +170,6 @@ def generate_launch_description():
         *base_spawners,
         joy_node,
         lidar_node,
+        camera_node,
         twist_mux,
     ])
