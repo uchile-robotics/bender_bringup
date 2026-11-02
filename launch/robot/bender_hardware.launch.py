@@ -2,7 +2,8 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import AndSubstitution, Command, LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import (AndSubstitution, Command, LaunchConfiguration,
+                                  NotSubstitution, PathJoinSubstitution)
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
@@ -27,11 +28,11 @@ BASE_CONTROLLERS = [
 ]
 
 
-def spawner(controller, condition=None):
+def spawner(controller, condition=None, extra_args=None):
     return Node(
         package='controller_manager',
         executable='spawner',
-        arguments=[controller, '--controller-manager', CONTROLLER_MANAGER],
+        arguments=[controller, '--controller-manager', CONTROLLER_MANAGER] + (extra_args or []),
         condition=condition,
     )
 
@@ -116,6 +117,17 @@ def generate_launch_description():
     arm_spawners = [spawner(name, IfCondition(use_arms)) for name in ARM_CONTROLLERS]
     base_spawners = [spawner(name, IfCondition(use_base)) for name in BASE_CONTROLLERS]
 
+    # Luz del pecho (Pico W en /dev/encoders). El hardware ShoulderJoint solo existe
+    # con use_arms, y la state interface estop/pressed solo existe con use_base
+    # (la exporta el Pioneer), así que sin base se lanza con el e-stop deshabilitado.
+    chest_led_spawners = [
+        spawner('chest_led_controller',
+                IfCondition(AndSubstitution(use_arms, use_base))),
+        spawner('chest_led_controller',
+                IfCondition(AndSubstitution(use_arms, NotSubstitution(use_base))),
+                extra_args=['--controller-ros-args=-p estop_interface:=""']),
+    ]
+
     joy_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([joy_pkg, 'launch', 'joystick.launch.py'])
@@ -168,6 +180,7 @@ def generate_launch_description():
         joint_state_broadcaster_spawner,
         *arm_spawners,
         *base_spawners,
+        *chest_led_spawners,
         joy_node,
         lidar_node,
         camera_node,
