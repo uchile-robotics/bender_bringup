@@ -12,9 +12,12 @@ from launch_ros.substitutions import FindPackageShare
 
 CONTROLLER_MANAGER = '/bender/controller_manager'
 
-ARM_CONTROLLERS = [
+SHOULDER_CONTROLLERS = [
     'left_shoulder_controller',
     'right_shoulder_controller',
+]
+
+DYNAMIXEL_CONTROLLERS = [
     'left_arm_controller',
     'right_arm_controller',
     'head_controller',
@@ -43,6 +46,7 @@ def generate_launch_description():
     sensors_pkg = FindPackageShare('bender_sensors')
 
     use_arms = LaunchConfiguration('use_arms')
+    use_dynamixel = LaunchConfiguration('use_dynamixel')
     use_base = LaunchConfiguration('use_base')
     use_joy = LaunchConfiguration('use_joy')
     use_lidar = LaunchConfiguration('use_lidar')
@@ -51,11 +55,16 @@ def generate_launch_description():
     camera_frame = LaunchConfiguration('camera_frame')
 
     declare_use_arms = DeclareLaunchArgument(
-        'use_arms', default_value='true',
+        'use_arms', default_value='false',
         description='Start shoulders, arms, grippers and head (ODrive + Dynamixel)'
     )
+    declare_use_dynamixel = DeclareLaunchArgument(
+        'use_dynamixel', default_value='true',
+        description='Start the Dynamixel chains (arms, grippers, head). '
+                    'Only if use_arms is true; false keeps just the shoulders'
+    )
     declare_use_base = DeclareLaunchArgument(
-        'use_base', default_value='false',
+        'use_base', default_value='true',
         description='Start the Pioneer base, the e-stop broadcaster and twist_mux'
     )
     declare_use_joy = DeclareLaunchArgument(
@@ -63,11 +72,11 @@ def generate_launch_description():
         description='Start the joystick teleop (only if use_base is true)'
     )
     declare_use_lidar = DeclareLaunchArgument(
-        'use_lidar', default_value='false',
+        'use_lidar', default_value='true',
         description='Start the RPLidar C1 and its scan filter (publishes /scan)'
     )
     declare_use_camera = DeclareLaunchArgument(
-        'use_camera', default_value='true',
+        'use_camera', default_value='false',
         description='Start the USB camera (publishes /usb_cam/image_raw)'
     )
     declare_camera_device = DeclareLaunchArgument(
@@ -90,6 +99,7 @@ def generate_launch_description():
             'xacro ', urdf_path,
             ' hardware:=real',
             ' use_arms:=', use_arms,
+            ' use_dynamixel:=', use_dynamixel,
             ' use_base:=', use_base,
         ]),
         value_type=str
@@ -114,7 +124,9 @@ def generate_launch_description():
     )
 
     joint_state_broadcaster_spawner = spawner('joint_state_broadcaster')
-    arm_spawners = [spawner(name, IfCondition(use_arms)) for name in ARM_CONTROLLERS]
+    arm_spawners = [spawner(name, IfCondition(use_arms)) for name in SHOULDER_CONTROLLERS]
+    arm_spawners += [spawner(name, IfCondition(AndSubstitution(use_arms, use_dynamixel)))
+                     for name in DYNAMIXEL_CONTROLLERS]
     base_spawners = [spawner(name, IfCondition(use_base)) for name in BASE_CONTROLLERS]
 
     # Luz del pecho (Pico W en /dev/encoders). El hardware ShoulderJoint solo existe
@@ -137,7 +149,7 @@ def generate_launch_description():
 
     lidar_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            PathJoinSubstitution([sensors_pkg, 'launch', 'lidar', 'rplidar_c1_launch.py'])
+            PathJoinSubstitution([sensors_pkg, 'launch', 'lidar', 'hokuyo.launch.py'])
         ),
         # El link del lidar en el URDF se llama laser_1
         launch_arguments={'frame_id': 'laser_1'}.items(),
@@ -169,6 +181,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         declare_use_arms,
+        declare_use_dynamixel,
         declare_use_base,
         declare_use_joy,
         declare_use_lidar,
