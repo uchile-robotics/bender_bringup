@@ -31,19 +31,19 @@ def generate_launch_description():
     use_sim = LaunchConfiguration('use_sim')
 
     declare_use_arms = DeclareLaunchArgument(
-        'use_arms', default_value='true',
+        'use_arms', default_value='false',
         description='Start shoulders, arms, grippers and head, and MoveIt'
     )
     declare_use_base = DeclareLaunchArgument(
-        'use_base', default_value='true',
+        'use_base', default_value='false',
         description='Start the Pioneer base, localization and Nav2'
     )
     declare_use_joy = DeclareLaunchArgument(
-        'use_joy', default_value='true',
+        'use_joy', default_value='false',
         description='Start the joystick teleop (only if use_base is true)'
     )
     declare_use_lidar = DeclareLaunchArgument(
-        'use_lidar', default_value='true',
+        'use_lidar', default_value='false',
         description='Start the RPLidar C1 and its scan filter (publishes /scan)'
     )
     declare_use_rviz = DeclareLaunchArgument(

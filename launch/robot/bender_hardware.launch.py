@@ -120,6 +120,13 @@ def generate_launch_description():
         namespace='bender',
         remappings=[('robot_description', '/robot_description')],
         parameters=[controllers_yaml_path],
+        arguments=[
+            '--ros-args',
+            '--log-level', 'dynamixel_hardware_interface:=error',
+            # Los avisos de ciclo async los emite ros2_control con un logger por hardware
+            '--log-level', 'bender.controller_manager.hardware_component.system.DynamixelChainLeft:=error',
+            '--log-level', 'bender.controller_manager.hardware_component.system.DynamixelChainRight:=error',
+        ],
         output='screen'
     )
 
