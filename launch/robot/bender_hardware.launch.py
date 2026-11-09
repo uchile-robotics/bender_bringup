@@ -17,11 +17,16 @@ SHOULDER_CONTROLLERS = [
     'right_shoulder_controller',
 ]
 
-DYNAMIXEL_CONTROLLERS = [
+# Cadena izquierda (/dev/dynamixel_left): brazo y gripper izquierdos y cabeza
+DYNAMIXEL_LEFT_CONTROLLERS = [
     'left_arm_controller',
-    'right_arm_controller',
     'head_controller',
     'left_gripper_controller',
+]
+
+# Cadena derecha (/dev/dynamixel_right): brazo y gripper derechos
+DYNAMIXEL_RIGHT_CONTROLLERS = [
+    'right_arm_controller',
     'right_gripper_controller',
 ]
 
@@ -47,6 +52,8 @@ def generate_launch_description():
 
     use_arms = LaunchConfiguration('use_arms')
     use_dynamixel = LaunchConfiguration('use_dynamixel')
+    use_shoulders = LaunchConfiguration('use_shoulders')
+    use_dxl_right = LaunchConfiguration('use_dxl_right')
     use_base = LaunchConfiguration('use_base')
     use_joy = LaunchConfiguration('use_joy')
     use_lidar = LaunchConfiguration('use_lidar')
@@ -55,13 +62,24 @@ def generate_launch_description():
     camera_frame = LaunchConfiguration('camera_frame')
 
     declare_use_arms = DeclareLaunchArgument(
-        'use_arms', default_value='false',
+        'use_arms', default_value='true',
         description='Start shoulders, arms, grippers and head (ODrive + Dynamixel)'
     )
     declare_use_dynamixel = DeclareLaunchArgument(
         'use_dynamixel', default_value='true',
         description='Start the Dynamixel chains (arms, grippers, head). '
                     'Only if use_arms is true; false keeps just the shoulders'
+    )
+    declare_use_shoulders = DeclareLaunchArgument(
+        'use_shoulders', default_value='true',
+        description='Start the shoulders (ODrive + encoder Pico, which also drives the chest LED). '
+                    'Only if use_arms is true'
+    )
+    # Por defecto en false: el conversor USB-RS485 de la cadena derecha está dañado
+    declare_use_dxl_right = DeclareLaunchArgument(
+        'use_dxl_right', default_value='false',
+        description='Start the right Dynamixel chain (right arm and gripper). '
+                    'Only if use_dynamixel is true'
     )
     declare_use_base = DeclareLaunchArgument(
         'use_base', default_value='true',
@@ -72,11 +90,11 @@ def generate_launch_description():
         description='Start the joystick teleop (only if use_base is true)'
     )
     declare_use_lidar = DeclareLaunchArgument(
-        'use_lidar', default_value='true',
+        'use_lidar', default_value='false',
         description='Start the RPLidar C1 and its scan filter (publishes /scan)'
     )
     declare_use_camera = DeclareLaunchArgument(
-        'use_camera', default_value='false',
+        'use_camera', default_value='true',
         description='Start the USB camera (publishes /usb_cam/image_raw)'
     )
     declare_camera_device = DeclareLaunchArgument(
@@ -100,6 +118,8 @@ def generate_launch_description():
             ' hardware:=real',
             ' use_arms:=', use_arms,
             ' use_dynamixel:=', use_dynamixel,
+            ' use_shoulders:=', use_shoulders,
+            ' use_dxl_right:=', use_dxl_right,
             ' use_base:=', use_base,
         ]),
         value_type=str
@@ -120,23 +140,31 @@ def generate_launch_description():
         namespace='bender',
         remappings=[('robot_description', '/robot_description')],
         parameters=[controllers_yaml_path],
+        arguments=['--ros-args',
+            '--log-level', 'bender.controller_manager.hardware_component.system.DynamixelChainLeft:=error',
+            '--log-level', 'bender.controller_manager.hardware_component.system.DynamixelChainRight:=error',
+            '--log-level', 'dynamixel_hardware_interface:=error'],
         output='screen'
     )
 
     joint_state_broadcaster_spawner = spawner('joint_state_broadcaster')
-    arm_spawners = [spawner(name, IfCondition(use_arms)) for name in SHOULDER_CONTROLLERS]
-    arm_spawners += [spawner(name, IfCondition(AndSubstitution(use_arms, use_dynamixel)))
-                     for name in DYNAMIXEL_CONTROLLERS]
+    shoulders_on = AndSubstitution(use_arms, use_shoulders)
+    arm_spawners = [spawner(name, IfCondition(shoulders_on)) for name in SHOULDER_CONTROLLERS]
+    dynamixel_on = AndSubstitution(use_arms, use_dynamixel)
+    arm_spawners += [spawner(name, IfCondition(dynamixel_on))
+                     for name in DYNAMIXEL_LEFT_CONTROLLERS]
+    arm_spawners += [spawner(name, IfCondition(AndSubstitution(dynamixel_on, use_dxl_right)))
+                     for name in DYNAMIXEL_RIGHT_CONTROLLERS]
     base_spawners = [spawner(name, IfCondition(use_base)) for name in BASE_CONTROLLERS]
 
     # Luz del pecho (Pico W en /dev/encoders). El hardware ShoulderJoint solo existe
-    # con use_arms, y la state interface estop/pressed solo existe con use_base
-    # (la exporta el Pioneer), así que sin base se lanza con el e-stop deshabilitado.
+    # con use_arms y use_shoulders, y la state interface estop/pressed solo existe con
+    # use_base (la exporta el Pioneer), así que sin base se lanza con el e-stop deshabilitado.
     chest_led_spawners = [
         spawner('chest_led_controller',
-                IfCondition(AndSubstitution(use_arms, use_base))),
+                IfCondition(AndSubstitution(shoulders_on, use_base))),
         spawner('chest_led_controller',
-                IfCondition(AndSubstitution(use_arms, NotSubstitution(use_base))),
+                IfCondition(AndSubstitution(shoulders_on, NotSubstitution(use_base))),
                 extra_args=['--controller-ros-args=-p estop_interface:=""']),
     ]
 
@@ -182,6 +210,8 @@ def generate_launch_description():
     return LaunchDescription([
         declare_use_arms,
         declare_use_dynamixel,
+        declare_use_shoulders,
+        declare_use_dxl_right,
         declare_use_base,
         declare_use_joy,
         declare_use_lidar,
